@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04E2178DDE0B4F84C06D6C9E /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
 		0AFACDF3E5F35D2875E77F7B /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
 		13DAC386CE98B40C00F9474C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
@@ -26,6 +27,7 @@
 		893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
 		9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
 		A783E775502193BF14866B65 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
+		AFAEDBCE49E84DC989243C02 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
 		C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
 		F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
@@ -39,6 +41,7 @@
 		4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43A9C28FA797FF332C4D5C6D /* StickySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickySettings.swift; sourceTree = "<group>"; };
 		83F60DD2C0BCBFC972014E39 /* StickyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyView.swift; sourceTree = "<group>"; };
+		85354AF690D50E0DA3BB11D7 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		914C5C8E026C5C7DB980947E /* NoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
 		AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLabel.swift; sourceTree = "<group>"; };
 		AE291E13C33C9DBDEF46D63C /* PostitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostitApp.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 				D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */,
 				0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */,
 				AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */,
+				85354AF690D50E0DA3BB11D7 /* SampleData.swift */,
 				43A9C28FA797FF332C4D5C6D /* StickySettings.swift */,
 			);
 			path = Models;
@@ -220,6 +224,7 @@
 				F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */,
 				395BC4BA06ABA0EF117A3167 /* NoteRow.swift in Sources */,
 				4416162FA75F05FAEADA2C9E /* PostitApp.swift in Sources */,
+				AFAEDBCE49E84DC989243C02 /* SampleData.swift in Sources */,
 				0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */,
 				8826547561978D00E69BFA79 /* StickySettings.swift in Sources */,
 				7897F2EF7E92A26505EFBE98 /* StickyView.swift in Sources */,
@@ -238,6 +243,7 @@
 				804CA53542479FED177EF1A7 /* NoteList.swift in Sources */,
 				0AFACDF3E5F35D2875E77F7B /* NoteRow.swift in Sources */,
 				1A9184F0FD4A15E5B5160325 /* PostitApp.swift in Sources */,
+				04E2178DDE0B4F84C06D6C9E /* SampleData.swift in Sources */,
 				13DAC386CE98B40C00F9474C /* SettingsView.swift in Sources */,
 				7938EB332074CCE1A4899751 /* StickySettings.swift in Sources */,
 				67E60D4047ADFFD029A76FA7 /* StickyView.swift in Sources */,

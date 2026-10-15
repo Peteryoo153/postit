@@ -51,6 +51,16 @@ struct PostitApp: App {
                 Toggle("항상 위에 띄우기", isOn: $alwaysOnTop)
                     .keyboardShortcut("t", modifiers: [.command, .shift])
             }
+            #if DEBUG
+            CommandMenu("개발") {
+                Button("더미 데이터 넣기 (일주일)") {
+                    SampleData.insert(into: modelContainer.mainContext)
+                }
+                Button("더미 데이터 지우기") {
+                    SampleData.removeAll(from: modelContainer.mainContext)
+                }
+            }
+            #endif
         }
 
         Settings {
@@ -69,5 +79,18 @@ struct PostitApp: App {
         StickyView()
             .environment(settings)
             .environment(cloud)
+            #if DEBUG
+            .task { handleDebugLaunchArguments() }
+            #endif
     }
+
+    #if DEBUG
+    /// 실행 인자로 더미 데이터를 넣고 뺄 수 있다: -seedSamples / -removeSamples
+    @MainActor
+    private func handleDebugLaunchArguments() {
+        let args = ProcessInfo.processInfo.arguments
+        if args.contains("-seedSamples") { SampleData.insert(into: modelContainer.mainContext) }
+        if args.contains("-removeSamples") { SampleData.removeAll(from: modelContainer.mainContext) }
+    }
+    #endif
 }

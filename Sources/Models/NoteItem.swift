@@ -19,6 +19,8 @@ final class NoteItem {
     var sortDate: Date = Date.now
     /// 작성한 날(자정 기준). 날짜별 구분과 정렬에 쓴다.
     var day: Date = Calendar.current.startOfDay(for: .now)
+    /// 테스트용 더미 항목 표시. 개발 메뉴에서 한 번에 지울 때 쓴다.
+    var isSample: Bool = false
 
     init(text: String, label: NoteLabel = .none) {
         let now = Date.now
