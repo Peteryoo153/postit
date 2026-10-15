@@ -20,7 +20,8 @@ struct StickyView: View {
 
     var body: some View {
         content
-            .background(settings.paper.color)
+            .background(settings.paper.color, in: paperShape)
+            .clipShape(paperShape)
             .environment(\.colorScheme, .light)
             .onChange(of: filter) { limit = Theme.pageSize }
             // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신
@@ -37,6 +38,15 @@ struct StickyView: View {
                 }
             }
             #endif
+    }
+
+    /// 포스트잇 외곽 모양. 맥에서는 설정한 둥글기, iOS는 화면을 꽉 채우므로 사각.
+    private var paperShape: RoundedRectangle {
+        #if os(macOS)
+        RoundedRectangle(cornerRadius: settings.cornerRadius, style: .continuous)
+        #else
+        RoundedRectangle(cornerRadius: 0)
+        #endif
     }
 
     @ViewBuilder
@@ -91,18 +101,34 @@ struct StickyView: View {
     private var inputRow: some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
             LineBox(font: settings.textFont) { LabelPill(label: $draftLabel) }
-            TextField("한 줄 적고 ⏎", text: $draft)
+            TextField("", text: $draft)
                 .textFieldStyle(.plain)
                 .font(settings.textFont)
                 .foregroundStyle(Theme.ink)
                 .focused($inputFocused)
                 .onSubmit(add)
                 .submitLabel(.done)
+                // 안내 문구: 얇은 "Todo" (입력하면 사라짐)
+                .overlay(alignment: .leading) {
+                    if draft.isEmpty {
+                        Text("Todo")
+                            .font(settings.font.font(size: settings.fontSize, weight: .light))
+                            .foregroundStyle(Theme.ink.opacity(0.28))
+                            .allowsHitTesting(false)
+                    }
+                }
         }
-        .padding(.bottom, 4)
-        .overlay(alignment: .bottom) {
-            Rectangle().fill(Theme.ink.opacity(inputFocused ? 0.25 : 0.1)).frame(height: 1)
-        }
+        // 아주 옅은 회색 박스로 입력칸임을 알 수 있게.
+        // 박스 안쪽 여백만큼 바깥으로 넓혀서 블릿이 아래 목록과 같은 줄에 맞도록 한다.
+        .padding(.horizontal, 10)
+        .padding(.vertical, 7)
+        .background(
+            Theme.ink.opacity(inputFocused ? 0.06 : 0.04),
+            in: RoundedRectangle(cornerRadius: 6, style: .continuous)
+        )
+        .padding(.horizontal, -10)
+        .contentShape(Rectangle())
+        .onTapGesture { inputFocused = true }
     }
 
     private func add() {

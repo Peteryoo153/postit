@@ -17,6 +17,7 @@
 		395BC4BA06ABA0EF117A3167 /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
 		4416162FA75F05FAEADA2C9E /* PostitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE291E13C33C9DBDEF46D63C /* PostitApp.swift */; };
 		4BAFF6641217802960B0C7C7 /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
+		5CE1A1D2A796C118AF940449 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF01B835E8538C6F7DF0A /* AppServices.swift */; };
 		67E60D4047ADFFD029A76FA7 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
 		73B55A8A92CC2333F59CD337 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE867DD0E0E5BEE856FA517E /* Assets.xcassets */; };
 		73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
@@ -31,9 +32,11 @@
 		A783E775502193BF14866B65 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
 		AFAEDBCE49E84DC989243C02 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
+		C505FB3B45C2F9775E79652E /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF01B835E8538C6F7DF0A /* AppServices.swift */; };
 		C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
 		F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
 		F4AD8D4F758B81143133409E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
+		F751E1166C3802A6374B1FAF /* StickyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */; };
 		FD0EBF528987F60B27C0E47A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE867DD0E0E5BEE856FA517E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -42,8 +45,10 @@
 		07C0C39493092AC579F90AEC /* Postit_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Postit_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43A9C28FA797FF332C4D5C6D /* StickySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickySettings.swift; sourceTree = "<group>"; };
+		4F2FF01B835E8538C6F7DF0A /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
 		83F60DD2C0BCBFC972014E39 /* StickyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyView.swift; sourceTree = "<group>"; };
 		85354AF690D50E0DA3BB11D7 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyWindow.swift; sourceTree = "<group>"; };
 		914C5C8E026C5C7DB980947E /* NoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
 		AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLabel.swift; sourceTree = "<group>"; };
 		AE291E13C33C9DBDEF46D63C /* PostitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostitApp.swift; sourceTree = "<group>"; };
@@ -91,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				B7BF8AB80B6962DCAB92A0ED /* CollapsedStrip.swift */,
+				908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */,
 				E205DA6B68F14CF47377821E /* WindowChrome.swift */,
 			);
 			path = Mac;
@@ -99,6 +105,7 @@
 		69A421AFAA98B0305CE60DA2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4F2FF01B835E8538C6F7DF0A /* AppServices.swift */,
 				AE291E13C33C9DBDEF46D63C /* PostitApp.swift */,
 				C08A5BAA36501A9459801DA1 /* Theme.swift */,
 				6308D95F96F9B5A02E62D69F /* Mac */,
@@ -231,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE1A1D2A796C118AF940449 /* AppServices.swift in Sources */,
 				893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */,
 				B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */,
 				02C369E90C891EB089B2DD97 /* CollapsedStrip.swift in Sources */,
@@ -243,6 +251,7 @@
 				0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */,
 				8826547561978D00E69BFA79 /* StickySettings.swift in Sources */,
 				7897F2EF7E92A26505EFBE98 /* StickyView.swift in Sources */,
+				F751E1166C3802A6374B1FAF /* StickyWindow.swift in Sources */,
 				C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */,
 				8635A174AB2B577F854EBFF6 /* WindowChrome.swift in Sources */,
 			);
@@ -252,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C505FB3B45C2F9775E79652E /* AppServices.swift in Sources */,
 				4BAFF6641217802960B0C7C7 /* CloudEnvironment.swift in Sources */,
 				88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */,
 				36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */,

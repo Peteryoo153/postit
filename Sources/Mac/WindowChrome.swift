@@ -1,17 +1,19 @@
 import SwiftUI
 import AppKit
 
-/// 스티커처럼 보이도록 창 장식을 걷어내고, 접기/펼치기에 맞춰 창 높이를 바꾼다.
-/// 닫기·최소화·확대 버튼을 숨기고, 창 배경 어디를 잡아도 옮길 수 있게 한다.
-/// 닫기는 ⌘W, 최소화는 ⌘M으로 그대로 쓸 수 있다.
+/// 창 수준 설정을 실제 창에 반영한다: 접기/펼치기 높이, 항상 위, 모서리에 맞춘 그림자.
 struct WindowChrome: NSViewRepresentable {
     static let collapsedHeight: CGFloat = 40
     private static let expandedHeightKey = "expandedHeight"
+    private static let expandedMinSize = NSSize(width: 260, height: 300)
 
     var collapsed: Bool
+    var cornerRadius: Double
+    var alwaysOnTop: Bool
 
     final class Coordinator {
         var appliedCollapsed: Bool?
+        var appliedRadius: Double?
     }
 
     func makeCoordinator() -> Coordinator { Coordinator() }
@@ -28,17 +30,19 @@ struct WindowChrome: NSViewRepresentable {
 
     private func configure(_ window: NSWindow?, _ coordinator: Coordinator) {
         guard let window else { return }
-        for kind in [NSWindow.ButtonType.closeButton, .miniaturizeButton, .zoomButton] {
-            window.standardWindowButton(kind)?.isHidden = true
+        window.level = alwaysOnTop ? .floating : .normal
+
+        if coordinator.appliedRadius != cornerRadius {
+            coordinator.appliedRadius = cornerRadius
+            // 그림자가 새로 그려진 모서리를 따라가도록 (그린 뒤에 다시 계산)
+            DispatchQueue.main.async { window.invalidateShadow() }
         }
-        window.titleVisibility = .hidden
-        window.titlebarAppearsTransparent = true
-        window.isMovableByWindowBackground = true
 
         guard coordinator.appliedCollapsed != collapsed else { return }
         let isFirstApply = coordinator.appliedCollapsed == nil
         coordinator.appliedCollapsed = collapsed
         resize(window, animate: !isFirstApply)
+        DispatchQueue.main.async { window.invalidateShadow() }
     }
 
     /// 윗변을 고정한 채로 높이만 바꾼다 (스티커가 위로 말려 올라가듯).
@@ -51,11 +55,16 @@ struct WindowChrome: NSViewRepresentable {
             if frame.height > Self.collapsedHeight + 1 {
                 defaults.set(frame.height, forKey: Self.expandedHeightKey)
             }
+            window.minSize = NSSize(width: Self.expandedMinSize.width, height: Self.collapsedHeight)
+            window.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: Self.collapsedHeight)
             frame.size.height = Self.collapsedHeight
         } else {
+            window.minSize = Self.expandedMinSize
+            window.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude,
+                                    height: CGFloat.greatestFiniteMagnitude)
             let saved = defaults.double(forKey: Self.expandedHeightKey)
             guard frame.height <= Self.collapsedHeight + 1 || saved > 0 else { return }
-            frame.size.height = saved > 0 ? saved : 560
+            frame.size.height = max(saved > 0 ? saved : 560, Self.expandedMinSize.height)
         }
         frame.origin.y = top - frame.height
         window.setFrame(frame, display: true, animate: animate)

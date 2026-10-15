@@ -55,9 +55,20 @@ struct SettingsView: View {
                     .foregroundStyle(Theme.ink)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(16)
-                    .background(s.paper.color)
+                    .background(s.paper.color, in: RoundedRectangle(cornerRadius: s.cornerRadius * 0.5))
                     .environment(\.colorScheme, .light)
             }
+
+            #if os(macOS)
+            Section("모양") {
+                slider("모서리", value: $s.cornerRadius, in: 0...32, unit: "pt")
+                HStack {
+                    Text("각지게").font(.caption).foregroundStyle(.secondary)
+                    Spacer()
+                    Text("둥글게").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+            #endif
 
             Section("작성자") {
                 TextField("포스트잇 하단에 표시할 이름", text: $s.authorName)
