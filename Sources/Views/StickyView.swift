@@ -125,13 +125,13 @@ struct StickyView: View {
 
             Spacer()
 
-            if let message = cloud.message {
-                Label(message, systemImage: cloud.symbol)
-                    .labelStyle(.iconOnly)
-                    .font(.system(size: 12))
-                    .foregroundStyle(Theme.author)
-                    .help(message)
-            }
+            // 동기화 상태: 전 · 중(깜빡임) · 완료 — 마우스를 올리면 설명
+            Image(systemName: cloud.symbol)
+                .foregroundStyle(cloud.state == .error ? Theme.Label.red : Theme.author)
+                .symbolEffect(.pulse, isActive: cloud.state == .syncing)
+                .contentTransition(.symbolEffect(.replace))
+                .help(cloud.message)
+                .accessibilityLabel(cloud.message)
 
             Menu {
                 Picker("라벨 필터", selection: $filter) {
