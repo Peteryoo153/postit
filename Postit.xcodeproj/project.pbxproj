@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02C369E90C891EB089B2DD97 /* CollapsedStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BF8AB80B6962DCAB92A0ED /* CollapsedStrip.swift */; };
 		04E2178DDE0B4F84C06D6C9E /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
 		0AFACDF3E5F35D2875E77F7B /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
@@ -47,6 +48,7 @@
 		AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLabel.swift; sourceTree = "<group>"; };
 		AE291E13C33C9DBDEF46D63C /* PostitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostitApp.swift; sourceTree = "<group>"; };
 		B2E12B8922C2642B89506003 /* Postit_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Postit_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7BF8AB80B6962DCAB92A0ED /* CollapsedStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsedStrip.swift; sourceTree = "<group>"; };
 		C08A5BAA36501A9459801DA1 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		CE867DD0E0E5BEE856FA517E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStatus.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		6308D95F96F9B5A02E62D69F /* Mac */ = {
 			isa = PBXGroup;
 			children = (
+				B7BF8AB80B6962DCAB92A0ED /* CollapsedStrip.swift */,
 				E205DA6B68F14CF47377821E /* WindowChrome.swift */,
 			);
 			path = Mac;
@@ -230,6 +233,7 @@
 			files = (
 				893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */,
 				B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */,
+				02C369E90C891EB089B2DD97 /* CollapsedStrip.swift in Sources */,
 				73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */,
 				A783E775502193BF14866B65 /* NoteLabel.swift in Sources */,
 				F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */,

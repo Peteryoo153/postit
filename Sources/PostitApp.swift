@@ -7,6 +7,7 @@ struct PostitApp: App {
     @State private var cloud = CloudStatus()
     #if os(macOS)
     @AppStorage("alwaysOnTop") private var alwaysOnTop = true
+    @AppStorage("collapsed") private var collapsed = false
     #endif
 
     let modelContainer: ModelContainer = {
@@ -38,9 +39,11 @@ struct PostitApp: App {
         #if os(macOS)
         Window("Postit", id: "sticky") {
             content
-                .frame(minWidth: 260, idealWidth: 400, minHeight: 300, idealHeight: 560)
+                .frame(minWidth: 260, idealWidth: 400,
+                       minHeight: collapsed ? 1 : 300,  // 접힌 높이는 WindowChrome이 정한다 (제목줄 높이가 더해지지 않게)
+                       idealHeight: 560)
                 .ignoresSafeArea()
-                .background(WindowChrome())
+                .background(WindowChrome(collapsed: collapsed))
         }
         .windowStyle(.hiddenTitleBar)
         .windowLevel(alwaysOnTop ? .floating : .normal)
@@ -51,6 +54,8 @@ struct PostitApp: App {
             CommandGroup(after: .windowArrangement) {
                 Toggle("항상 위에 띄우기", isOn: $alwaysOnTop)
                     .keyboardShortcut("t", modifiers: [.command, .shift])
+                Button(collapsed ? "펼치기" : "접기") { collapsed.toggle() }
+                    .keyboardShortcut("c", modifiers: [.command, .shift])
             }
             #if DEBUG
             CommandMenu("개발") {

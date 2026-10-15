@@ -14,8 +14,53 @@ struct StickyView: View {
     @State private var showSettings = false
     @State private var today = Calendar.current.startOfDay(for: .now)
     @FocusState private var inputFocused: Bool
+    #if os(macOS)
+    @AppStorage("collapsed") private var collapsed = false
+    #endif
 
     var body: some View {
+        content
+            .background(settings.paper.color)
+            .environment(\.colorScheme, .light)
+            .onChange(of: filter) { limit = Theme.pageSize }
+            // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신
+            .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+                today = Calendar.current.startOfDay(for: .now)
+            }
+            #if os(iOS)
+            .sheet(isPresented: $showSettings) {
+                NavigationStack {
+                    SettingsView()
+                        .toolbar {
+                            Button("완료") { showSettings = false }
+                        }
+                }
+            }
+            #endif
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        #if os(macOS)
+        if collapsed {
+            CollapsedStrip()
+                .onTapGesture(count: 2) { collapsed = false }
+        } else {
+            expanded
+                // 위쪽 빈 곳을 더블클릭하면 접힌다 (맥 스티커처럼)
+                .overlay(alignment: .top) {
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .frame(height: Theme.topPadding - 12)
+                        .onTapGesture(count: 2) { collapsed = true }
+                }
+        }
+        #else
+        expanded
+        #endif
+    }
+
+    private var expanded: some View {
         VStack(alignment: .leading, spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: settings.rowSpacing + 6) {
@@ -39,23 +84,6 @@ struct StickyView: View {
                 .padding(.bottom, Theme.bottomPadding)
                 .padding(.top, 8)
         }
-        .background(settings.paper.color)
-        .environment(\.colorScheme, .light)
-        .onChange(of: filter) { limit = Theme.pageSize }
-        // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신
-        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
-            today = Calendar.current.startOfDay(for: .now)
-        }
-        #if os(iOS)
-        .sheet(isPresented: $showSettings) {
-            NavigationStack {
-                SettingsView()
-                    .toolbar {
-                        Button("완료") { showSettings = false }
-                    }
-            }
-        }
-        #endif
     }
 
     // MARK: 입력 줄 — 엔터마다 한 줄씩 추가, 새 항목은 맨 위로
