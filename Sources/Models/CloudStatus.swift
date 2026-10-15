@@ -53,6 +53,7 @@ final class CloudStatus {
     func syncNow(_ context: ModelContext) {
         guard canSync else { refreshAccount(); return }
         try? context.save()                         // 아직 저장 안 된 변경을 먼저 올리도록
+        NSUbiquitousKeyValueStore.default.synchronize()  // 이름·폰트·색상 설정도 함께
         isManualSyncing = true
         state = .syncing
         #if os(macOS)
