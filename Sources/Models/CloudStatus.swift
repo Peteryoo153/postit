@@ -10,6 +10,7 @@ final class CloudStatus {
     enum State { case checking, syncing, upToDate, signedOut, localOnly, error }
 
     private(set) var state: State = .checking
+    private(set) var lastError: String?
 
     var message: String? {
         switch state {
@@ -17,7 +18,7 @@ final class CloudStatus {
         case .syncing:   "iCloud 동기화 중…"
         case .signedOut: "iCloud에 로그인되어 있지 않아 이 기기에만 저장됩니다"
         case .localOnly: "iCloud 권한 없이 서명된 빌드라 이 기기에만 저장됩니다"
-        case .error:     "iCloud 동기화 오류"
+        case .error:     "iCloud 동기화 오류" + (lastError.map { ": \($0)" } ?? "")
         }
     }
 
@@ -65,6 +66,7 @@ final class CloudStatus {
             state = .syncing
         } else {
             state = event.succeeded ? .upToDate : .error
+            lastError = event.error?.localizedDescription
         }
     }
 }

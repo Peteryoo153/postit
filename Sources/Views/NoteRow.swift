@@ -10,7 +10,7 @@ struct NoteRow: View {
 
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
-            LabelPill(label: $item.label)
+            LineBox(font: settings.textFont) { LabelPill(label: $item.label) }
 
             TextField("", text: $item.text, axis: .vertical)
                 .textFieldStyle(.plain)
@@ -24,7 +24,9 @@ struct NoteRow: View {
                     if !isEditing { deleteIfEmpty() }
                 }
 
-            CheckBox(isOn: item.isDone, size: settings.fontSize) { toggle() }
+            LineBox(font: settings.textFont) {
+                CheckBox(isOn: item.isDone, size: settings.fontSize) { toggle() }
+            }
         }
         .contextMenu {
             Picker("라벨", selection: $item.label) {
@@ -52,6 +54,20 @@ struct NoteRow: View {
     private func deleteIfEmpty() {
         if item.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             withAnimation { context.delete(item) }
+        }
+    }
+}
+
+/// 첫 줄과 같은 높이의 칸을 만들고 그 가운데에 내용을 둔다.
+/// 숨긴 글자가 기준선(baseline)을 제공하므로 .firstTextBaseline 정렬에서 텍스트 줄과 정확히 맞는다.
+struct LineBox<Content: View>: View {
+    var font: Font
+    @ViewBuilder var content: Content
+
+    var body: some View {
+        ZStack {
+            Text("가").font(font).hidden()
+            content
         }
     }
 }
@@ -90,8 +106,7 @@ struct LabelPill: View {
         } label: {
             RoundedRectangle(cornerRadius: 2)
                 .fill(label == .none ? Theme.ink.opacity(0.12) : label.color)
-                .frame(width: 6, height: 14)
-                .padding(.vertical, 2)
+                .frame(width: 5, height: 14)
                 .contentShape(Rectangle().inset(by: -6))
         }
         .menuStyle(.button)

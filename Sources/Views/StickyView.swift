@@ -12,14 +12,18 @@ struct StickyView: View {
     @State private var limit = Theme.pageSize
     @State private var filter: NoteLabel?
     @State private var showSettings = false
+    @State private var today = Calendar.current.startOfDay(for: .now)
     @FocusState private var inputFocused: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: settings.rowSpacing + 6) {
-                    inputRow
-                    NoteList(limit: limit, filter: filter) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        DayHeader(title: "Today")
+                        inputRow
+                    }
+                    NoteList(today: today, limit: limit, filter: filter) {
                         limit += Theme.pageSize
                     }
                     .id(filter)
@@ -38,6 +42,10 @@ struct StickyView: View {
         .background(settings.paper.color)
         .environment(\.colorScheme, .light)
         .onChange(of: filter) { limit = Theme.pageSize }
+        // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            today = Calendar.current.startOfDay(for: .now)
+        }
         #if os(iOS)
         .sheet(isPresented: $showSettings) {
             NavigationStack {
@@ -54,7 +62,7 @@ struct StickyView: View {
 
     private var inputRow: some View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
-            LabelPill(label: $draftLabel)
+            LineBox(font: settings.textFont) { LabelPill(label: $draftLabel) }
             TextField("한 줄 적고 ⏎", text: $draft)
                 .textFieldStyle(.plain)
                 .font(settings.textFont)

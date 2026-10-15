@@ -17,12 +17,15 @@ final class NoteItem {
     var doneRank: Int = 0
     /// 진행 중이면 작성 시각, 완료면 완료 시각. 최신이 위로.
     var sortDate: Date = Date.now
+    /// 작성한 날(자정 기준). 날짜별 구분과 정렬에 쓴다.
+    var day: Date = Calendar.current.startOfDay(for: .now)
 
     init(text: String, label: NoteLabel = .none) {
         let now = Date.now
         self.text = text
         self.createdAt = now
         self.sortDate = now
+        self.day = Calendar.current.startOfDay(for: now)
         self.labelRaw = label.rawValue
     }
 
@@ -43,7 +46,10 @@ final class NoteItem {
         sortDate = isDone ? (completedAt ?? .now) : createdAt
     }
 
+    /// 최근 날짜가 위로. 같은 날 안에서는 진행 중(최신순) → 완료(최근 완료순).
     static var listSort: [SortDescriptor<NoteItem>] {
-        [SortDescriptor(\.doneRank), SortDescriptor(\.sortDate, order: .reverse)]
+        [SortDescriptor(\.day, order: .reverse),
+         SortDescriptor(\.doneRank),
+         SortDescriptor(\.sortDate, order: .reverse)]
     }
 }
