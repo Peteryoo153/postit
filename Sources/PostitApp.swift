@@ -56,6 +56,8 @@ struct PostitApp: App {
                     .keyboardShortcut("t", modifiers: [.command, .shift])
                 Button(collapsed ? "펼치기" : "접기") { collapsed.toggle() }
                     .keyboardShortcut("c", modifiers: [.command, .shift])
+                Button("지금 동기화") { cloud.syncNow(modelContainer.mainContext) }
+                    .keyboardShortcut("r", modifiers: .command)
             }
             #if DEBUG
             CommandMenu("개발") {

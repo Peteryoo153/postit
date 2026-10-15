@@ -2,6 +2,11 @@ import CloudKit
 import CoreData
 import Observation
 import SwiftData
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// 애플 ID(iCloud) 로그인 상태와 동기화 진행을 지켜본다.
 /// 별도 로그인 화면 없이, 기기에 로그인된 애플 ID로 CloudKit이 동기화한다.
@@ -38,6 +43,31 @@ final class CloudStatus {
     }
 
     private var canSync: Bool { state != .signedOut && state != .localOnly }
+
+    /// 사용자가 동기화 버튼을 눌러 기다리는 중 (아이콘 반응용)
+    private(set) var isManualSyncing = false
+
+    /// 지금 동기화.
+    /// CloudKit+SwiftData에는 공개된 "지금 동기화" API가 없다. 대신 Core Data가 앱 활성화 알림을 받으면
+    /// 가져오기·내보내기를 바로 시작하는 동작을 이용한다 (로그: "Beginning automated import - AppActivation").
+    func syncNow(_ context: ModelContext) {
+        guard canSync else { refreshAccount(); return }
+        try? context.save()                         // 아직 저장 안 된 변경을 먼저 올리도록
+        isManualSyncing = true
+        state = .syncing
+        #if os(macOS)
+        NotificationCenter.default.post(name: NSApplication.didBecomeActiveNotification, object: nil)
+        #else
+        NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        #endif
+        // 할 일이 없거나 요청이 묶여서 이벤트가 안 오면 잠시 뒤 정리
+        Task {
+            try? await Task.sleep(for: .seconds(8))
+            guard isManualSyncing else { return }
+            isManualSyncing = false
+            if running.isEmpty, state == .syncing { state = .upToDate }
+        }
+    }
 
     init() {
         guard CloudEnvironment.isCloudKitEntitled else {
@@ -92,7 +122,9 @@ final class CloudStatus {
         if !event.succeeded {
             state = .error
             lastError = event.error?.localizedDescription
+            isManualSyncing = false
         } else if running.isEmpty {
+            isManualSyncing = false
             // 이후 작업이 성공하면 이전 오류에서 회복된 것으로 본다
             state = .upToDate
             lastError = nil

@@ -125,13 +125,19 @@ struct StickyView: View {
 
             Spacer()
 
-            // 동기화 상태: 전 · 중(깜빡임) · 완료 — 마우스를 올리면 설명
-            Image(systemName: cloud.symbol)
-                .foregroundStyle(cloud.state == .error ? Theme.Label.red : Theme.author)
-                .symbolEffect(.pulse, isActive: cloud.state == .syncing)
-                .contentTransition(.symbolEffect(.replace))
-                .help(cloud.message)
-                .accessibilityLabel(cloud.message)
+            // 동기화 상태: 전 · 중(깜빡임) · 완료 — 누르면 지금 동기화
+            Button {
+                cloud.syncNow(context)
+            } label: {
+                Image(systemName: cloud.symbol)
+                    .foregroundStyle(cloud.state == .error ? Theme.Label.red : Theme.author)
+                    .symbolEffect(.pulse, isActive: cloud.state == .syncing)
+                    .contentTransition(.symbolEffect(.replace))
+            }
+            .buttonStyle(.plain)
+            .help("\(cloud.message) — 누르면 지금 동기화")
+            .accessibilityLabel(cloud.message)
+            .accessibilityHint("지금 동기화")
 
             Menu {
                 Picker("라벨 필터", selection: $filter) {
