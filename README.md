@@ -2,28 +2,56 @@
 
 맥 · 아이패드 · 아이폰을 오가며 iCloud로 동기화되는 포스트잇.
 
-- 한 줄씩 적으면 맨 위에 추가, 오른쪽 체크박스로 완료
-- 완료하면 밑줄 + 흐림 처리 후 아래로 이동
+## 맥에 설치하기 (다른 맥 포함)
+
+1. 이 저장소에서 **[`release/Postit-macOS-1.0.zip`](release/Postit-macOS-1.0.zip)** 을 열고 오른쪽 위 **Download(⬇︎)** 를 눌러 내려받는다.
+2. 내려받은 zip을 더블클릭하면 `Postit.app`이 나온다.
+3. `Postit.app`을 **응용 프로그램(Applications)** 폴더로 끌어다 놓는다.
+4. 응용 프로그램에서 Postit을 연다. (Apple 공증을 받은 앱이라 경고 없이 열린다)
+5. 그 맥이 **같은 애플 ID로 iCloud에 로그인**되어 있으면 포스트잇과 할 일이 바로 동기화된다.
+
+- 요구 사항: macOS 15 이상
+- 처음 실행하면 로그인 시 자동 실행이 켜진다 (설정 > 창에서 끌 수 있음)
+- 공용 컴퓨터에서 다 쓴 뒤에는 설정에서 "로그인 시 자동 실행"을 끄고 앱을 응용 프로그램에서 지우면 된다.
+  iCloud 데이터는 그대로 남는다.
+
+## 기능
+
+- 한 줄씩 적으면 맨 위에 추가, 오른쪽 체크박스로 완료 → 취소선과 흐림 처리 후 그 날짜 아래쪽으로
+- 날짜별 구분 (Today / 2026.10.17(Sat)), 날이 바뀌면 못 끝낸 일은 Today로 이월
 - 스크롤 끝에 닿으면 이전 항목을 30개씩 더 불러옴
-- 텍스트 앞 컬러 라벨로 구분, 하단 필터로 라벨별 보기
-- 설정: 폰트 · 크기 · 두께 · 줄 간격 · 항목 간격 · 종이 색상 · 작성자 이름 (설정도 iCloud 동기화)
-- 맥: 제목줄 없는 스티커 창, 기본으로 항상 위에 (⇧⌘T로 전환)
+- 텍스트 앞 컬러 라벨, … 메뉴에서 라벨별 보기
+- 포스트잇 여러 장 (맥에서 최대 6장 동시에 열기). 이름·색·열림 여부도 iCloud 동기화
+- 설정: 폰트 · 크기 · 두께 · 줄 간격 · 항목 간격 · 모서리 · 종이 색 · 작성자 이름 (iCloud 동기화)
+- 맥: 테두리 없는 스티커 창, 항상 위, 접기/펼치기, 창 위치는 맥마다 기억
+
+### 맥 단축키 (윈도우 키보드: ⌘ = 윈도우 키, ⌥ = Alt)
+
+| 기능 | 맥 | 윈도우 키보드 |
+|---|---|---|
+| 어디서나 포스트잇 띄우기 / 지금 모니터로 | ⌃⌥P | Ctrl + Alt + P |
+| 새 포스트잇 | ⌘N | ⊞ + N |
+| 닫기 | ⌘W | ⊞ + W |
+| 접기 / 펼치기 | ⇧⌘C | ⊞ + Shift + C |
+| 지금 동기화 | ⌘R | ⊞ + R |
+| 되돌리기 / 다시 실행 | ⌘Z / ⇧⌘Z | ⊞ + Z / ⊞ + Shift + Z |
+| 항상 위에 | ⇧⌘T | ⊞ + Shift + T |
+| 설정 | ⌘, | ⊞ + , |
 
 ## 구조
 
 | 경로 | 내용 |
 |---|---|
-| `Sources/Models/NoteItem.swift` | SwiftData 모델 (CloudKit 동기화) |
-| `Sources/Models/StickySettings.swift` | 사용자 설정, iCloud 키-값 저장소 |
-| `Sources/Models/CloudStatus.swift` | 애플 ID 로그인 · 동기화 상태 |
-| `Sources/Views/` | 스티키, 한 줄, 리스트(페이지 로딩), 설정 |
+| `Sources/Models/` | SwiftData 모델(NoteItem, Sticky), 설정(iCloud 키-값), 동기화 상태, 날짜 이월 |
+| `Sources/Views/` | 포스트잇, 한 줄, 리스트(페이지 로딩), 설정 |
+| `Sources/Mac/` | 맥 전용: 스티커 창, 여러 창 관리, 전역 단축키, 접힌 띠 |
 | `Sources/Theme.swift` | 디자인 토큰 (종이 색, 폰트, 라벨 색) |
+| `release/` | 공증받은 맥 설치 파일 |
 
 ## 빌드
 
-1. Xcode 설치 후 `xcodegen generate` (프로젝트는 이미 포함됨)
-2. `Postit.xcodeproj` 열기 → 두 타깃(Postit_macOS, Postit_iOS)의 Signing에서 팀 선택
-3. Signing & Capabilities에서 iCloud 컨테이너 `iCloud.com.peter.postit` 생성/체크
-4. 실행. 같은 애플 ID로 로그인된 기기끼리 자동 동기화됨
-
-iCloud 동기화는 유료 Apple Developer Program 계정이 필요합니다. 서명 전에는 로컬 저장으로 동작합니다.
+1. Xcode 설치 후 `xcodegen generate`
+2. `Postit.xcodeproj` 열기 → 팀 7VAL2U8BVL로 서명 (iCloud 컨테이너 `iCloud.com.peter.postit`)
+3. CloudKit은 **Production** 환경을 쓴다 (`com.apple.developer.icloud-container-environment`).
+   데이터 구조를 바꾸면 CloudKit Console에서 Deploy Schema Changes로 운영 환경에 배포해야 한다.
+4. 맥 배포본: Release 아카이브 → Developer ID로 내보내며 공증(업로드) → `release/`에 zip
