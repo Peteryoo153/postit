@@ -7,6 +7,53 @@ final class StickyWindow: NSWindow {
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
 
+    // MARK: 종이 아무 곳이나 끌어서 창 이동
+    // SwiftUI 내용 영역이 마우스를 먼저 받아서 isMovableByWindowBackground가 동작하지 않으므로,
+    // 눌렀다가 조금 끌면 창이 직접 이동을 시작한다. 클릭(체크박스·버튼)은 그대로 전달된다.
+
+    private var dragStart: NSPoint?
+    private static let dragThreshold: CGFloat = 4
+    private static let resizeEdge: CGFloat = 8
+
+    override func sendEvent(_ event: NSEvent) {
+        switch event.type {
+        case .leftMouseDown:
+            dragStart = canStartMove(at: event.locationInWindow) ? event.locationInWindow : nil
+        case .leftMouseDragged:
+            if let start = dragStart {
+                let p = event.locationInWindow
+                if hypot(p.x - start.x, p.y - start.y) >= Self.dragThreshold {
+                    dragStart = nil
+                    performDrag(with: event)
+                    return
+                }
+            }
+        case .leftMouseUp:
+            dragStart = nil
+        default:
+            break
+        }
+        super.sendEvent(event)
+    }
+
+    /// 입력칸(글자 선택)이나 가장자리(크기 조절)에서는 이동하지 않는다.
+    private func canStartMove(at point: NSPoint) -> Bool {
+        let size = frame.size
+        if point.x < Self.resizeEdge || point.x > size.width - Self.resizeEdge
+            || point.y < Self.resizeEdge || point.y > size.height - Self.resizeEdge {
+            return false
+        }
+        // hitTest는 받는 뷰의 '부모' 좌표계를 쓴다 (호스팅 뷰는 위아래가 뒤집혀 있어서 주의)
+        guard let content = contentView,
+              let parent = content.superview,
+              var view = content.hitTest(parent.convert(point, from: nil)) else { return true }
+        while true {
+            if view is NSText || view is NSTextField { return false }
+            guard let parent = view.superview else { return true }
+            view = parent
+        }
+    }
+
     override func performClose(_ sender: Any?) { close() }
     override func performMiniaturize(_ sender: Any?) { miniaturize(sender) }
 
