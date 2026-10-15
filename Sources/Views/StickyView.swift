@@ -1,39 +1,87 @@
 import SwiftUI
 import SwiftData
 
+extension Notification.Name {
+    /// 맥: 이 포스트잇을 새 창으로 연다 (object = UUID)
+    static let postitOpenSticky = Notification.Name("postitOpenSticky")
+    /// 맥: 이 포스트잇 창을 닫는다 (object = UUID)
+    static let postitCloseSticky = Notification.Name("postitCloseSticky")
+    /// 이 포스트잇의 입력칸에 커서를 둔다 (object = UUID) — 전역 단축키용
+    static let postitFocusInput = Notification.Name("postitFocusInput")
+}
+
 /// 포스트잇 한 장. Figma 스티키 구성: 종이색 배경 · 넉넉한 여백 · 본문 · 하단 작성자.
 struct StickyView: View {
+    let stickyID: UUID
+    /// iOS: 다른 포스트잇으로 넘길 때
+    var onSelect: ((UUID) -> Void)? = nil
+
     @Environment(StickySettings.self) private var settings
     @Environment(\.modelContext) private var context
     @Environment(CloudStatus.self) private var cloud
+    @Query private var stickies: [Sticky]
+    @Query(sort: \Sticky.createdAt) private var allStickies: [Sticky]
 
     @State private var draft = ""
     @State private var draftLabel: NoteLabel = .none
     @State private var limit = Theme.pageSize
     @State private var filter: NoteLabel?
     @State private var showSettings = false
+    @State private var renaming = false
+    @State private var newTitle = ""
+    @State private var confirmDelete = false
     @State private var today = Calendar.current.startOfDay(for: .now)
     @FocusState private var inputFocused: Bool
     #if os(macOS)
-    @AppStorage("collapsed") private var collapsed = false
+    @AppStorage private var collapsed: Bool
     #endif
+
+    init(stickyID: UUID, onSelect: ((UUID) -> Void)? = nil) {
+        self.stickyID = stickyID
+        self.onSelect = onSelect
+        _stickies = Query(filter: #Predicate<Sticky> { $0.id == stickyID })
+        #if os(macOS)
+        _collapsed = AppStorage(wrappedValue: false, OpenStickies.collapsedKey(stickyID))
+        #endif
+    }
+
+    private var sticky: Sticky? { stickies.first }
+    private var paper: PaperColor { sticky?.paper ?? settings.paper }
 
     var body: some View {
         content
-            .background(settings.paper.color, in: paperShape)
+            .background(paper.color, in: paperShape)
             .clipShape(paperShape)
             .environment(\.colorScheme, .light)
             .onChange(of: filter) { limit = Theme.pageSize }
-            // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신
+            // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신하고 못 끝낸 일을 Today로
             .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
                 today = Calendar.current.startOfDay(for: .now)
-                DayRollover.run(in: context)
+                AppServices.shared.refreshOnActivation()
             }
-            // 못 끝낸 일을 Today로: 실행할 때, 자정이 지날 때, 앱으로 돌아올 때
-            .task { DayRollover.run(in: context) }
             .onReceive(NotificationCenter.default.publisher(for: Self.didBecomeActive)) { _ in
                 today = Calendar.current.startOfDay(for: .now)
-                DayRollover.run(in: context)
+                AppServices.shared.refreshOnActivation()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .postitFocusInput)) { note in
+                guard note.object as? UUID == stickyID else { return }
+                #if os(macOS)
+                collapsed = false
+                #endif
+                inputFocused = true
+            }
+            .alert("포스트잇 이름", isPresented: $renaming) {
+                TextField("예: 교회, 개인", text: $newTitle)
+                Button("저장") { sticky?.title = newTitle.trimmingCharacters(in: .whitespaces) }
+                Button("취소", role: .cancel) {}
+            }
+            .confirmationDialog(
+                "이 포스트잇과 안의 할 일을 모두 지울까요?",
+                isPresented: $confirmDelete, titleVisibility: .visible
+            ) {
+                Button("삭제", role: .destructive, action: deleteSticky)
+            } message: {
+                Text("모든 기기에서 함께 지워집니다.")
             }
             #if os(iOS)
             .sheet(isPresented: $showSettings) {
@@ -66,7 +114,7 @@ struct StickyView: View {
     private var content: some View {
         #if os(macOS)
         if collapsed {
-            CollapsedStrip()
+            CollapsedStrip(stickyID: stickyID, title: sticky?.title ?? "")
                 .onTapGesture(count: 2) { collapsed = false }
         } else {
             expanded
@@ -91,7 +139,7 @@ struct StickyView: View {
                         DayHeader(title: "Today")
                         inputRow
                     }
-                    NoteList(today: today, limit: limit, filter: filter) {
+                    NoteList(stickyID: stickyID, today: today, limit: limit, filter: filter) {
                         limit += Theme.pageSize
                     }
                     .id(filter)
@@ -148,13 +196,17 @@ struct StickyView: View {
         let text = draft.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
         withAnimation(.spring(duration: 0.35)) {
-            context.insert(NoteItem(text: text, label: draftLabel))
+            context.insert(NoteItem(text: text, label: draftLabel, stickyID: stickyID))
         }
         draft = ""
         inputFocused = true
+        #if os(macOS)
+        // 입력칸을 비운 기록은 버린다 → 바로 ⌘Z 하면 방금 추가한 항목이 취소된다
+        DispatchQueue.main.async { (NSApp.keyWindow as? StickyWindow)?.textUndo.removeAllActions() }
+        #endif
     }
 
-    // MARK: 하단 — 작성자 · 동기화 상태 · 필터 · 설정
+    // MARK: 하단 — 작성자 · 동기화 상태 · 포스트잇 메뉴 · 설정
 
     private var footer: some View {
         HStack(spacing: 12) {
@@ -178,28 +230,88 @@ struct StickyView: View {
             .accessibilityLabel(cloud.message)
             .accessibilityHint("지금 동기화")
 
-            Menu {
-                Picker("라벨 필터", selection: $filter) {
-                    Text("전체").tag(NoteLabel?.none)
-                    ForEach(NoteLabel.allCases.filter { $0 != .none }) { l in
-                        Text(l.title).tag(Optional(l))
-                    }
-                }
-                .pickerStyle(.inline)
-            } label: {
-                Image(systemName: filter == nil
-                      ? "line.3.horizontal.decrease.circle"
-                      : "line.3.horizontal.decrease.circle.fill")
-                    .foregroundStyle(filter?.color ?? Theme.author)
-            }
-            .menuStyle(.button)
-            .buttonStyle(.plain)
-            .menuIndicator(.hidden)
-            .fixedSize()
+            stickyMenu
 
             settingsButton
         }
         .font(.system(size: 14))
+    }
+
+    /// 이 포스트잇 메뉴: 라벨 필터 · 종이 색 · 이름 · 새 포스트잇/전환 · 삭제
+    private var stickyMenu: some View {
+        Menu {
+            Picker("라벨 필터", selection: $filter) {
+                Text("전체").tag(NoteLabel?.none)
+                ForEach(NoteLabel.allCases.filter { $0 != .none }) { l in
+                    Text(l.title).tag(Optional(l))
+                }
+            }
+
+            Picker("종이 색", selection: Binding(
+                get: { paper },
+                set: { sticky?.paper = $0 }
+            )) {
+                ForEach(PaperColor.allCases) { Text($0.title).tag($0) }
+            }
+
+            Button("이름 바꾸기…") {
+                newTitle = sticky?.title ?? ""
+                renaming = true
+            }
+
+            Divider()
+
+            #if os(macOS)
+            Menu("포스트잇 열기") {
+                ForEach(allStickies) { s in
+                    Button(s.title.isEmpty ? "이름 없음 (\(s.paper.title))" : s.title) {
+                        NotificationCenter.default.post(name: .postitOpenSticky, object: s.id)
+                    }
+                }
+            }
+            #else
+            Picker("포스트잇 전환", selection: Binding(
+                get: { stickyID },
+                set: { onSelect?($0) }
+            )) {
+                ForEach(allStickies) { s in
+                    Text(s.title.isEmpty ? "이름 없음" : s.title).tag(s.id)
+                }
+            }
+            #endif
+            Button("새 포스트잇") { openNewSticky() }
+
+            if stickyID != StickyStore.defaultID {
+                Button("이 포스트잇 삭제…", role: .destructive) { confirmDelete = true }
+            }
+        } label: {
+            Image(systemName: filter == nil ? "ellipsis.circle" : "line.3.horizontal.decrease.circle.fill")
+                .foregroundStyle(filter?.color ?? Theme.author)
+        }
+        .menuStyle(.button)
+        .buttonStyle(.plain)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .help("이 포스트잇: 필터 · 색 · 이름 · 새 포스트잇")
+    }
+
+    private func openNewSticky() {
+        let new = StickyStore.create(in: context, paper: settings.paper)
+        #if os(macOS)
+        NotificationCenter.default.post(name: .postitOpenSticky, object: new.id)
+        #else
+        onSelect?(new.id)
+        #endif
+    }
+
+    private func deleteSticky() {
+        let id = stickyID
+        #if os(macOS)
+        NotificationCenter.default.post(name: .postitCloseSticky, object: id)
+        #else
+        onSelect?(StickyStore.defaultID)
+        #endif
+        StickyStore.delete(id, in: context)
     }
 
     @ViewBuilder

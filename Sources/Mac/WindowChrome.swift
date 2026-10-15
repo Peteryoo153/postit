@@ -4,9 +4,9 @@ import AppKit
 /// 창 수준 설정을 실제 창에 반영한다: 접기/펼치기 높이, 항상 위, 모서리에 맞춘 그림자.
 struct WindowChrome: NSViewRepresentable {
     static let collapsedHeight: CGFloat = 40
-    private static let expandedHeightKey = "expandedHeight"
     private static let expandedMinSize = NSSize(width: 260, height: 300)
 
+    var stickyID: UUID
     var collapsed: Bool
     var cornerRadius: Double
     var alwaysOnTop: Bool
@@ -53,7 +53,7 @@ struct WindowChrome: NSViewRepresentable {
 
         if collapsed {
             if frame.height > Self.collapsedHeight + 1 {
-                defaults.set(frame.height, forKey: Self.expandedHeightKey)
+                defaults.set(frame.height, forKey: OpenStickies.expandedHeightKey(stickyID))
             }
             window.minSize = NSSize(width: Self.expandedMinSize.width, height: Self.collapsedHeight)
             window.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: Self.collapsedHeight)
@@ -62,7 +62,7 @@ struct WindowChrome: NSViewRepresentable {
             window.minSize = Self.expandedMinSize
             window.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude,
                                     height: CGFloat.greatestFiniteMagnitude)
-            let saved = defaults.double(forKey: Self.expandedHeightKey)
+            let saved = defaults.double(forKey: OpenStickies.expandedHeightKey(stickyID))
             guard frame.height <= Self.collapsedHeight + 1 || saved > 0 else { return }
             frame.size.height = max(saved > 0 ? saved : 560, Self.expandedMinSize.height)
         }

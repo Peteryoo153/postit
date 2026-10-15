@@ -5,13 +5,25 @@ import SwiftData
 /// 이름은 iCloud 설정으로 동기화되므로 다른 기기에서 바꿔도 그대로 따라온다.
 /// 더블클릭하면 펼쳐진다.
 struct CollapsedStrip: View {
-    @Query(filter: #Predicate<NoteItem> { $0.doneRank == 0 })
-    private var openItems: [NoteItem]
+    let title: String
+    @Query private var openItems: [NoteItem]
     @Environment(StickySettings.self) private var settings
+
+    init(stickyID: UUID, title: String) {
+        self.title = title
+        let sid: UUID? = stickyID
+        _openItems = Query(filter: #Predicate<NoteItem> { $0.stickyID == sid && $0.doneRank == 0 })
+    }
+
+    /// 포스트잇 이름이 있으면 이름, 없으면 설정한 작성자 이름
+    private var label: String {
+        if !title.isEmpty { return title }
+        return settings.authorName.isEmpty ? "Postit" : settings.authorName
+    }
 
     var body: some View {
         HStack(spacing: 8) {
-            Text(settings.authorName.isEmpty ? "Postit" : settings.authorName)
+            Text(label)
                 .font(settings.font.font(size: 13, weight: .semibold))
                 .foregroundStyle(Theme.ink.opacity(0.75))
                 .lineLimit(1)

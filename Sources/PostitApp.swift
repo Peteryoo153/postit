@@ -7,7 +7,9 @@ struct PostitApp: App {
     #if os(macOS)
     @NSApplicationDelegateAdaptor(StickyAppDelegate.self) private var appDelegate
     @AppStorage("alwaysOnTop") private var alwaysOnTop = true
-    @AppStorage("collapsed") private var collapsed = false
+    #else
+    /// iOS: 지금 보고 있는 포스트잇 (기기마다 따로)
+    @AppStorage("currentSticky") private var currentSticky = StickyStore.defaultID.uuidString
     #endif
 
     var body: some Scene {
@@ -19,15 +21,19 @@ struct PostitApp: App {
                 .environment(services.settings)
         }
         .commands {
+            CommandGroup(replacing: .newItem) {
+                Button("새 포스트잇") { appDelegate.newSticky() }
+                    .keyboardShortcut("n", modifiers: .command)
+            }
             CommandGroup(after: .windowArrangement) {
                 Toggle("항상 위에 띄우기", isOn: $alwaysOnTop)
                     .keyboardShortcut("t", modifiers: [.command, .shift])
-                Button(collapsed ? "펼치기" : "접기") { collapsed.toggle() }
+                Button("접기 / 펼치기") { appDelegate.toggleCollapseOfKeyWindow() }
                     .keyboardShortcut("c", modifiers: [.command, .shift])
                 Button("지금 동기화") { services.cloud.syncNow(services.context) }
                     .keyboardShortcut("r", modifiers: .command)
                 Divider()
-                Button("포스트잇 보이기") { appDelegate.showSticky() }
+                Button("포스트잇 보이기 (\(GlobalHotKey.displayName))") { appDelegate.showStickies() }
                     .keyboardShortcut("0", modifiers: .command)
             }
             #if DEBUG
@@ -43,7 +49,10 @@ struct PostitApp: App {
         }
         #else
         WindowGroup {
-            StickyView()
+            StickyView(stickyID: UUID(uuidString: currentSticky) ?? StickyStore.defaultID) {
+                currentSticky = $0.uuidString
+            }
+                .id(currentSticky)
                 .environment(services.settings)
                 .environment(services.cloud)
                 .modelContainer(services.modelContainer)

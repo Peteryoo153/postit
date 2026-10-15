@@ -55,7 +55,7 @@ enum SampleData {
                   let created = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day)
             else { continue }
 
-            let item = NoteItem(text: text, label: label)
+            let item = NoteItem(text: text, label: label, stickyID: StickyStore.defaultID)
             item.createdAt = created
             item.day = day
             item.isSample = true

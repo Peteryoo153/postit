@@ -5,13 +5,14 @@ struct SettingsView: View {
     @Environment(StickySettings.self) private var settings
     #if os(macOS)
     @AppStorage("alwaysOnTop") private var alwaysOnTop = true
+    @State private var launchAtLogin = LoginItem.isEnabled
     #endif
 
     var body: some View {
         @Bindable var s = settings
 
         Form {
-            Section("종이") {
+            Section("새 포스트잇 기본 색") {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 34))], spacing: 10) {
                     ForEach(PaperColor.allCases) { paper in
                         Button {
@@ -77,6 +78,12 @@ struct SettingsView: View {
             #if os(macOS)
             Section("창") {
                 Toggle("항상 다른 창 위에 띄우기", isOn: $alwaysOnTop)
+                Toggle("로그인 시 자동 실행", isOn: Binding(
+                    get: { launchAtLogin },
+                    set: { LoginItem.set($0); launchAtLogin = LoginItem.isEnabled }
+                ))
+                LabeledContent("어디서나 포스트잇 열기", value: GlobalHotKey.displayName)
+                LabeledContent("새 포스트잇", value: "⌘N (최대 \(StickyStore.maxOpen)장)")
             }
             #endif
         }

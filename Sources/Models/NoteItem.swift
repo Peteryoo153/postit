@@ -21,10 +21,13 @@ final class NoteItem {
     var day: Date = Calendar.current.startOfDay(for: .now)
     /// 테스트용 더미 항목 표시. 개발 메뉴에서 한 번에 지울 때 쓴다.
     var isSample: Bool = false
+    /// 속한 포스트잇 (Sticky.id). 예전 항목은 nil → 실행 시 기본 포스트잇으로 옮긴다.
+    var stickyID: UUID?
 
-    init(text: String, label: NoteLabel = .none) {
+    init(text: String, label: NoteLabel = .none, stickyID: UUID = StickyStore.defaultID) {
         let now = Date.now
         self.text = text
+        self.stickyID = stickyID
         self.createdAt = now
         self.sortDate = now
         self.day = Calendar.current.startOfDay(for: now)

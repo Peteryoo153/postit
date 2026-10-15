@@ -11,13 +11,16 @@ struct NoteList: View {
     let limit: Int
     let loadMore: () -> Void
 
-    init(today: Date, limit: Int, filter: NoteLabel?, loadMore: @escaping () -> Void) {
+    init(stickyID: UUID, today: Date, limit: Int, filter: NoteLabel?, loadMore: @escaping () -> Void) {
         self.today = today
         self.limit = limit
         self.loadMore = loadMore
+        let sid: UUID? = stickyID
         var descriptor = FetchDescriptor<NoteItem>(sortBy: NoteItem.listSort)
         if let raw = filter?.rawValue {
-            descriptor.predicate = #Predicate { $0.labelRaw == raw }
+            descriptor.predicate = #Predicate { $0.stickyID == sid && $0.labelRaw == raw }
+        } else {
+            descriptor.predicate = #Predicate { $0.stickyID == sid }
         }
         descriptor.fetchLimit = limit
         _items = Query(descriptor, animation: .default)
