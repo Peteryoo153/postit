@@ -12,17 +12,26 @@ struct NoteRow: View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
             LineBox(font: settings.textFont) { LabelPill(label: $item.label) }
 
-            TextField("", text: $item.text, axis: .vertical)
-                .textFieldStyle(.plain)
-                .font(settings.textFont)
-                .lineSpacing(settings.lineSpacing)
-                .foregroundStyle(Theme.ink)
-                .strikethrough(item.isDone, color: Theme.ink.opacity(0.6))
-                .opacity(item.isDone ? 0.4 : 1)
-                .focused($editing)
-                .onChange(of: editing) { _, isEditing in
-                    if !isEditing { deleteIfEmpty() }
-                }
+            if item.isDone {
+                // 입력칸(TextField)에는 취소선이 그려지지 않아서 완료 항목은 Text로 보여준다
+                Text(item.text)
+                    .font(settings.textFont)
+                    .lineSpacing(settings.lineSpacing)
+                    .foregroundStyle(Theme.ink)
+                    .strikethrough(true, color: Theme.ink)
+                    .opacity(0.4)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            } else {
+                TextField("", text: $item.text, axis: .vertical)
+                    .textFieldStyle(.plain)
+                    .font(settings.textFont)
+                    .lineSpacing(settings.lineSpacing)
+                    .foregroundStyle(Theme.ink)
+                    .focused($editing)
+                    .onChange(of: editing) { _, isEditing in
+                        if !isEditing { deleteIfEmpty() }
+                    }
+            }
 
             LineBox(font: settings.textFont) {
                 CheckBox(isOn: item.isDone, size: settings.fontSize) { toggle() }

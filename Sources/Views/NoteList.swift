@@ -40,7 +40,7 @@ struct NoteList: View {
             ForEach(sections, id: \.day) { section in
                 if section.day != today {
                     DayHeader(title: DayHeader.format(section.day))
-                        .padding(.top, 18)
+                        .padding(.top, 24)
                 }
                 ForEach(section.items) { item in
                     NoteRow(item: item)

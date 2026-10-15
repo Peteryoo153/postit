@@ -8,6 +8,12 @@ enum Theme {
     static let author = Color.black.opacity(0.45)
 
     static let padding: CGFloat = 32
+    #if os(macOS)
+    /// 창 닫기/최소화 버튼 영역 아래로 충분히 띄운다
+    static let topPadding: CGFloat = 64
+    #else
+    static let topPadding: CGFloat = 40
+    #endif
     static let pageSize = 30
 
     enum Label {

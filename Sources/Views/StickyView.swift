@@ -29,7 +29,7 @@ struct StickyView: View {
                     .id(filter)
                 }
                 .padding(.horizontal, Theme.padding)
-                .padding(.top, Theme.padding)
+                .padding(.top, Theme.topPadding)
                 .padding(.bottom, 12)
             }
             .scrollIndicators(.never)
