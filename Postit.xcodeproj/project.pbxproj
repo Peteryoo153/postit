@@ -1,0 +1,491 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
+		0AFACDF3E5F35D2875E77F7B /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
+		13DAC386CE98B40C00F9474C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
+		1A9184F0FD4A15E5B5160325 /* PostitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE291E13C33C9DBDEF46D63C /* PostitApp.swift */; };
+		36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
+		395BC4BA06ABA0EF117A3167 /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
+		4416162FA75F05FAEADA2C9E /* PostitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE291E13C33C9DBDEF46D63C /* PostitApp.swift */; };
+		67E60D4047ADFFD029A76FA7 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
+		73B55A8A92CC2333F59CD337 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE867DD0E0E5BEE856FA517E /* Assets.xcassets */; };
+		73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
+		7897F2EF7E92A26505EFBE98 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
+		7938EB332074CCE1A4899751 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
+		804CA53542479FED177EF1A7 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
+		8826547561978D00E69BFA79 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
+		88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
+		9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
+		A783E775502193BF14866B65 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
+		B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
+		C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
+		F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
+		F4AD8D4F758B81143133409E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
+		FD0EBF528987F60B27C0E47A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE867DD0E0E5BEE856FA517E /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
+		07C0C39493092AC579F90AEC /* Postit_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Postit_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		43A9C28FA797FF332C4D5C6D /* StickySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickySettings.swift; sourceTree = "<group>"; };
+		83F60DD2C0BCBFC972014E39 /* StickyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyView.swift; sourceTree = "<group>"; };
+		914C5C8E026C5C7DB980947E /* NoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
+		AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLabel.swift; sourceTree = "<group>"; };
+		AE291E13C33C9DBDEF46D63C /* PostitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostitApp.swift; sourceTree = "<group>"; };
+		B2E12B8922C2642B89506003 /* Postit_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Postit_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C08A5BAA36501A9459801DA1 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		CE867DD0E0E5BEE856FA517E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStatus.swift; sourceTree = "<group>"; };
+		DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		12160FE9400C85123922584A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */,
+				914C5C8E026C5C7DB980947E /* NoteRow.swift */,
+				4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */,
+				83F60DD2C0BCBFC972014E39 /* StickyView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5038479A9286542879E26BED = {
+			isa = PBXGroup;
+			children = (
+				F9F66EF3715FB50F974A3E2E /* Resources */,
+				69A421AFAA98B0305CE60DA2 /* Sources */,
+				510CC5FF2E5FBD84BE39C824 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		510CC5FF2E5FBD84BE39C824 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				07C0C39493092AC579F90AEC /* Postit_iOS.app */,
+				B2E12B8922C2642B89506003 /* Postit_macOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		69A421AFAA98B0305CE60DA2 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AE291E13C33C9DBDEF46D63C /* PostitApp.swift */,
+				C08A5BAA36501A9459801DA1 /* Theme.swift */,
+				F3B800BBE44AA98D3721F7BA /* Models */,
+				12160FE9400C85123922584A /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		F3B800BBE44AA98D3721F7BA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */,
+				0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */,
+				AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */,
+				43A9C28FA797FF332C4D5C6D /* StickySettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F9F66EF3715FB50F974A3E2E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CE867DD0E0E5BEE856FA517E /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A82848A8623B78D40BBE12D /* Postit_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9AFDD27536C5CAEA3A6539EA /* Build configuration list for PBXNativeTarget "Postit_iOS" */;
+			buildPhases = (
+				D7D8F455F8C0FDBADF0870E2 /* Sources */,
+				847A56C20492B6A5323A915C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Postit_iOS;
+			packageProductDependencies = (
+			);
+			productName = Postit_iOS;
+			productReference = 07C0C39493092AC579F90AEC /* Postit_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B21C68AF44F5DD392D3D6C77 /* Postit_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7BFE79A34DC4CCCA0840495 /* Build configuration list for PBXNativeTarget "Postit_macOS" */;
+			buildPhases = (
+				ACA12324B9D61B0F638AC085 /* Sources */,
+				CBA88CBA142CEAC26E113284 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Postit_macOS;
+			packageProductDependencies = (
+			);
+			productName = Postit_macOS;
+			productReference = B2E12B8922C2642B89506003 /* Postit_macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		952936930A7823A05A69E5E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					6A82848A8623B78D40BBE12D = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					B21C68AF44F5DD392D3D6C77 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C9F66925B4BD9DA365E9307D /* Build configuration list for PBXProject "Postit" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5038479A9286542879E26BED;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 510CC5FF2E5FBD84BE39C824 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6A82848A8623B78D40BBE12D /* Postit_iOS */,
+				B21C68AF44F5DD392D3D6C77 /* Postit_macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		847A56C20492B6A5323A915C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73B55A8A92CC2333F59CD337 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CBA88CBA142CEAC26E113284 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD0EBF528987F60B27C0E47A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ACA12324B9D61B0F638AC085 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */,
+				73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */,
+				A783E775502193BF14866B65 /* NoteLabel.swift in Sources */,
+				F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */,
+				395BC4BA06ABA0EF117A3167 /* NoteRow.swift in Sources */,
+				4416162FA75F05FAEADA2C9E /* PostitApp.swift in Sources */,
+				0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */,
+				8826547561978D00E69BFA79 /* StickySettings.swift in Sources */,
+				7897F2EF7E92A26505EFBE98 /* StickyView.swift in Sources */,
+				C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7D8F455F8C0FDBADF0870E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */,
+				36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */,
+				9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */,
+				804CA53542479FED177EF1A7 /* NoteList.swift in Sources */,
+				0AFACDF3E5F35D2875E77F7B /* NoteRow.swift in Sources */,
+				1A9184F0FD4A15E5B5160325 /* PostitApp.swift in Sources */,
+				13DAC386CE98B40C00F9474C /* SettingsView.swift in Sources */,
+				7938EB332074CCE1A4899751 /* StickySettings.swift in Sources */,
+				67E60D4047ADFFD029A76FA7 /* StickyView.swift in Sources */,
+				F4AD8D4F758B81143133409E /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		33FCAA913113198A29CF4F9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		453805700AF2E191FEFFB17F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Postit-macOS.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Postit;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.peter.postit;
+				PRODUCT_NAME = Postit;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7A1F3DB60F6EE602C560D5AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Postit-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Postit;
+				INFOPLIST_KEY_UIBackgroundModes = "remote-notification";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.peter.postit;
+				PRODUCT_NAME = Postit;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8721136A725750145932993A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Postit-macOS.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Postit;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.peter.postit;
+				PRODUCT_NAME = Postit;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A1049E3DAE5AFEAAE38195D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Postit-iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Postit;
+				INFOPLIST_KEY_UIBackgroundModes = "remote-notification";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.peter.postit;
+				PRODUCT_NAME = Postit;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A5121F8675BE066A868867F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9AFDD27536C5CAEA3A6539EA /* Build configuration list for PBXNativeTarget "Postit_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1049E3DAE5AFEAAE38195D2 /* Debug */,
+				7A1F3DB60F6EE602C560D5AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A7BFE79A34DC4CCCA0840495 /* Build configuration list for PBXNativeTarget "Postit_macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8721136A725750145932993A /* Debug */,
+				453805700AF2E191FEFFB17F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C9F66925B4BD9DA365E9307D /* Build configuration list for PBXProject "Postit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5121F8675BE066A868867F5 /* Debug */,
+				33FCAA913113198A29CF4F9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 952936930A7823A05A69E5E6 /* Project object */;
+}

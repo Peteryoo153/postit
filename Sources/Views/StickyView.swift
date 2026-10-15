@@ -1,0 +1,141 @@
+import SwiftUI
+import SwiftData
+
+/// 포스트잇 한 장. Figma 스티키 구성: 종이색 배경 · 넉넉한 여백 · 본문 · 하단 작성자.
+struct StickyView: View {
+    @Environment(StickySettings.self) private var settings
+    @Environment(\.modelContext) private var context
+    @Environment(CloudStatus.self) private var cloud
+
+    @State private var draft = ""
+    @State private var draftLabel: NoteLabel = .none
+    @State private var limit = Theme.pageSize
+    @State private var filter: NoteLabel?
+    @State private var showSettings = false
+    @FocusState private var inputFocused: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: settings.rowSpacing + 6) {
+                    inputRow
+                    NoteList(limit: limit, filter: filter) {
+                        limit += Theme.pageSize
+                    }
+                    .id(filter)
+                }
+                .padding(.horizontal, Theme.padding)
+                .padding(.top, Theme.padding)
+                .padding(.bottom, 12)
+            }
+            .scrollIndicators(.never)
+
+            footer
+                .padding(.horizontal, Theme.padding)
+                .padding(.bottom, 20)
+                .padding(.top, 8)
+        }
+        .background(settings.paper.color)
+        .environment(\.colorScheme, .light)
+        .onChange(of: filter) { limit = Theme.pageSize }
+        #if os(iOS)
+        .sheet(isPresented: $showSettings) {
+            NavigationStack {
+                SettingsView()
+                    .toolbar {
+                        Button("완료") { showSettings = false }
+                    }
+            }
+        }
+        #endif
+    }
+
+    // MARK: 입력 줄 — 엔터마다 한 줄씩 추가, 새 항목은 맨 위로
+
+    private var inputRow: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            LabelPill(label: $draftLabel)
+            TextField("한 줄 적고 ⏎", text: $draft)
+                .textFieldStyle(.plain)
+                .font(settings.textFont)
+                .foregroundStyle(Theme.ink)
+                .focused($inputFocused)
+                .onSubmit(add)
+                .submitLabel(.done)
+        }
+        .padding(.bottom, 4)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Theme.ink.opacity(inputFocused ? 0.25 : 0.1)).frame(height: 1)
+        }
+    }
+
+    private func add() {
+        let text = draft.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return }
+        withAnimation(.spring(duration: 0.35)) {
+            context.insert(NoteItem(text: text, label: draftLabel))
+        }
+        draft = ""
+        inputFocused = true
+    }
+
+    // MARK: 하단 — 작성자 · 동기화 상태 · 필터 · 설정
+
+    private var footer: some View {
+        HStack(spacing: 12) {
+            Text(settings.authorName.isEmpty ? " " : settings.authorName)
+                .font(.system(size: 13))
+                .foregroundStyle(Theme.author)
+                .lineLimit(1)
+
+            Spacer()
+
+            if let message = cloud.message {
+                Label(message, systemImage: cloud.symbol)
+                    .labelStyle(.iconOnly)
+                    .font(.system(size: 12))
+                    .foregroundStyle(Theme.author)
+                    .help(message)
+            }
+
+            Menu {
+                Picker("라벨 필터", selection: $filter) {
+                    Text("전체").tag(NoteLabel?.none)
+                    ForEach(NoteLabel.allCases.filter { $0 != .none }) { l in
+                        Text(l.title).tag(Optional(l))
+                    }
+                }
+                .pickerStyle(.inline)
+            } label: {
+                Image(systemName: filter == nil
+                      ? "line.3.horizontal.decrease.circle"
+                      : "line.3.horizontal.decrease.circle.fill")
+                    .foregroundStyle(filter?.color ?? Theme.author)
+            }
+            .menuStyle(.button)
+            .buttonStyle(.plain)
+            .menuIndicator(.hidden)
+            .fixedSize()
+
+            settingsButton
+        }
+        .font(.system(size: 14))
+    }
+
+    @ViewBuilder
+    private var settingsButton: some View {
+        #if os(macOS)
+        SettingsLink {
+            Image(systemName: "gearshape").foregroundStyle(Theme.author)
+        }
+        .buttonStyle(.plain)
+        #else
+        Button {
+            showSettings = true
+        } label: {
+            Image(systemName: "gearshape").foregroundStyle(Theme.author)
+        }
+        .buttonStyle(.plain)
+        #endif
+    }
+}
