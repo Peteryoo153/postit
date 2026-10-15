@@ -14,6 +14,7 @@
 		36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
 		395BC4BA06ABA0EF117A3167 /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
 		4416162FA75F05FAEADA2C9E /* PostitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE291E13C33C9DBDEF46D63C /* PostitApp.swift */; };
+		4BAFF6641217802960B0C7C7 /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
 		67E60D4047ADFFD029A76FA7 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
 		73B55A8A92CC2333F59CD337 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE867DD0E0E5BEE856FA517E /* Assets.xcassets */; };
 		73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
@@ -22,6 +23,7 @@
 		804CA53542479FED177EF1A7 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
 		8826547561978D00E69BFA79 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
 		88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
+		893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
 		9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
 		A783E775502193BF14866B65 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
 		B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
@@ -45,6 +47,7 @@
 		CE867DD0E0E5BEE856FA517E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStatus.swift; sourceTree = "<group>"; };
 		DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
+		F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudEnvironment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -91,6 +94,7 @@
 		F3B800BBE44AA98D3721F7BA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */,
 				D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */,
 				0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */,
 				AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */,
@@ -156,11 +160,11 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					6A82848A8623B78D40BBE12D = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 7VAL2U8BVL;
 						ProvisioningStyle = Automatic;
 					};
 					B21C68AF44F5DD392D3D6C77 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 7VAL2U8BVL;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -209,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */,
 				B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */,
 				73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */,
 				A783E775502193BF14866B65 /* NoteLabel.swift in Sources */,
@@ -226,6 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BAFF6641217802960B0C7C7 /* CloudEnvironment.swift in Sources */,
 				88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */,
 				36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */,
 				9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */,
@@ -279,7 +285,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7VAL2U8BVL;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -425,7 +431,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7VAL2U8BVL;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
