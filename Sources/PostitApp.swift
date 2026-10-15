@@ -40,6 +40,7 @@ struct PostitApp: App {
             content
                 .frame(minWidth: 260, idealWidth: 400, minHeight: 300, idealHeight: 560)
                 .ignoresSafeArea()
+                .background(WindowChrome())
         }
         .windowStyle(.hiddenTitleBar)
         .windowLevel(alwaysOnTop ? .floating : .normal)

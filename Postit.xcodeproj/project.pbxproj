@@ -22,6 +22,7 @@
 		7897F2EF7E92A26505EFBE98 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
 		7938EB332074CCE1A4899751 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
 		804CA53542479FED177EF1A7 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
+		8635A174AB2B577F854EBFF6 /* WindowChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = E205DA6B68F14CF47377821E /* WindowChrome.swift */; };
 		8826547561978D00E69BFA79 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
 		88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
 		893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
@@ -50,6 +51,7 @@
 		CE867DD0E0E5BEE856FA517E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStatus.swift; sourceTree = "<group>"; };
 		DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteList.swift; sourceTree = "<group>"; };
+		E205DA6B68F14CF47377821E /* WindowChrome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowChrome.swift; sourceTree = "<group>"; };
 		F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudEnvironment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,11 +85,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6308D95F96F9B5A02E62D69F /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				E205DA6B68F14CF47377821E /* WindowChrome.swift */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
 		69A421AFAA98B0305CE60DA2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				AE291E13C33C9DBDEF46D63C /* PostitApp.swift */,
 				C08A5BAA36501A9459801DA1 /* Theme.swift */,
+				6308D95F96F9B5A02E62D69F /* Mac */,
 				F3B800BBE44AA98D3721F7BA /* Models */,
 				12160FE9400C85123922584A /* Views */,
 			);
@@ -229,6 +240,7 @@
 				8826547561978D00E69BFA79 /* StickySettings.swift in Sources */,
 				7897F2EF7E92A26505EFBE98 /* StickyView.swift in Sources */,
 				C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */,
+				8635A174AB2B577F854EBFF6 /* WindowChrome.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
