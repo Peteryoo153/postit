@@ -175,12 +175,13 @@ struct StickyView: View {
                 .focused($inputFocused)
                 .onSubmit(add)
                 .submitLabel(.done)
-                // 안내 문구: 얇은 "Todo" (입력하면 사라짐)
+                // 안내 문구: Today와 같은 작은 크기의 "Todo" (입력하면 사라지고, 쓰는 글자는 설정한 폰트대로)
                 .overlay(alignment: .leading) {
                     if draft.isEmpty {
                         Text("Todo")
-                            .font(settings.font.font(size: settings.fontSize, weight: .light))
-                            .foregroundStyle(Theme.ink.opacity(0.28))
+                            .font(.system(size: 10, weight: .medium))
+                            .tracking(0.3)
+                            .foregroundStyle(Theme.ink.opacity(0.3))
                             .allowsHitTesting(false)
                     }
                 }
