@@ -152,11 +152,16 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         UserDefaults.standard.set(!UserDefaults.standard.bool(forKey: key), forKey: key)
     }
 
+    /// ⌃⌥P: 포스트잇을 지금 보고 있는 모니터로 가져와 앞에 띄운다.
+    /// 이미 그 모니터에서 쓰고 있는 중이면 숨긴다.
     private func toggleFromHotKey() {
-        if NSApp.isActive, NSApp.keyWindow is StickyWindow {
+        let target = Self.screenWithMouse
+        let moves = windows.values.compactMap { w in Self.frame(w.frame, movedTo: target).map { (w, $0) } }
+        if moves.isEmpty, NSApp.isActive, NSApp.keyWindow is StickyWindow {
             NSApp.hide(nil)
             return
         }
+        for (window, frame) in moves { window.setFrame(frame, display: true, animate: false) }
         showStickies()
         if let id = (NSApp.keyWindow as? StickyWindow)?.stickyID {
             NotificationCenter.default.post(name: .postitFocusInput, object: id)
@@ -212,8 +217,9 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     }
 
     /// 기본 배열: 화면 오른쪽 위부터 3장씩 두 줄로 나란히
+    /// 기본 배열은 마우스가 있는 모니터의 오른쪽 위부터
     private func defaultFrame(slot: Int) -> NSRect {
-        let screen = (NSScreen.main ?? NSScreen.screens[0]).visibleFrame
+        let screen = Self.screenWithMouse.visibleFrame
         let margin: CGFloat = 24, gap: CGFloat = 16, columns = 3
         let width: CGFloat = 340
         let height = min(460, (screen.height - margin * 2 - gap) / 2)
@@ -221,6 +227,35 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         let x = screen.maxX - margin - CGFloat(column + 1) * width - CGFloat(column) * gap
         let top = screen.maxY - margin - CGFloat(row) * (height + gap)
         return NSRect(x: max(screen.minX, x), y: top - height, width: width, height: height)
+    }
+
+    /// 지금 마우스가 있는 모니터 (= 사용자가 보고 있는 모니터)
+    static var screenWithMouse: NSScreen {
+        let mouse = NSEvent.mouseLocation
+        return NSScreen.screens.first { NSMouseInRect(mouse, $0.frame, false) }
+            ?? NSScreen.main ?? NSScreen.screens[0]
+    }
+
+    /// 창이 대부분 걸쳐 있는 모니터
+    private static func screen(of frame: NSRect) -> NSScreen? {
+        NSScreen.screens.max { a, b in
+            let ia = a.frame.intersection(frame), ib = b.frame.intersection(frame)
+            return ia.width * ia.height < ib.width * ib.height
+        }
+    }
+
+    /// 다른 모니터에 있는 창을 같은 상대 위치로 옮긴다 (오른쪽 위에 있던 창은 오른쪽 위로).
+    /// 이미 그 모니터에 있는 창은 그대로 둔다.
+    static func frame(_ frame: NSRect, movedTo target: NSScreen) -> NSRect? {
+        guard let source = screen(of: frame), source != target else { return nil }
+        let src = source.visibleFrame, dst = target.visibleFrame
+        let size = NSSize(width: min(frame.width, dst.width), height: min(frame.height, dst.height))
+        func ratio(_ offset: CGFloat, _ room: CGFloat) -> CGFloat { room > 0 ? min(max(offset / room, 0), 1) : 0 }
+        let rx = ratio(frame.minX - src.minX, src.width - frame.width)
+        let ry = ratio(frame.minY - src.minY, src.height - frame.height)
+        return NSRect(x: (dst.minX + rx * (dst.width - size.width)).rounded(),
+                      y: (dst.minY + ry * (dst.height - size.height)).rounded(),
+                      width: size.width, height: size.height)
     }
 
     /// 저장된 자리가 지금 연결된 화면 밖이면(모니터를 뺀 경우 등) 기본 배열로
