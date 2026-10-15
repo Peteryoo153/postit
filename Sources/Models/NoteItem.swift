@@ -40,6 +40,9 @@ final class NoteItem {
     func setDone(_ done: Bool) {
         isDone = done
         completedAt = done ? .now : nil
+        // 지난 날 완료했던 일을 다시 풀면 아직 할 일이므로 Today로 가져온다
+        let today = Calendar.current.startOfDay(for: .now)
+        if !done, day < today { day = today }
     }
 
     /// 체크 상태에 맞게 리스트 위치를 옮긴다 (약간의 지연 후 호출).

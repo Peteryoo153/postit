@@ -30,8 +30,10 @@
 		893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
 		9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
 		A783E775502193BF14866B65 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
+		A903CAE5778B74851A21EBEF /* DayRollover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A940842A6442889B338F5BE4 /* DayRollover.swift */; };
 		AFAEDBCE49E84DC989243C02 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
+		B901FE9CAA40EA38D0AF87C6 /* DayRollover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A940842A6442889B338F5BE4 /* DayRollover.swift */; };
 		C505FB3B45C2F9775E79652E /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF01B835E8538C6F7DF0A /* AppServices.swift */; };
 		C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
 		F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
@@ -50,6 +52,7 @@
 		85354AF690D50E0DA3BB11D7 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyWindow.swift; sourceTree = "<group>"; };
 		914C5C8E026C5C7DB980947E /* NoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
+		A940842A6442889B338F5BE4 /* DayRollover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayRollover.swift; sourceTree = "<group>"; };
 		AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLabel.swift; sourceTree = "<group>"; };
 		AE291E13C33C9DBDEF46D63C /* PostitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostitApp.swift; sourceTree = "<group>"; };
 		B2E12B8922C2642B89506003 /* Postit_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Postit_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +123,7 @@
 			children = (
 				F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */,
 				D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */,
+				A940842A6442889B338F5BE4 /* DayRollover.swift */,
 				0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */,
 				AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */,
 				85354AF690D50E0DA3BB11D7 /* SampleData.swift */,
@@ -242,6 +246,7 @@
 				893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */,
 				B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */,
 				02C369E90C891EB089B2DD97 /* CollapsedStrip.swift in Sources */,
+				B901FE9CAA40EA38D0AF87C6 /* DayRollover.swift in Sources */,
 				73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */,
 				A783E775502193BF14866B65 /* NoteLabel.swift in Sources */,
 				F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */,
@@ -264,6 +269,7 @@
 				C505FB3B45C2F9775E79652E /* AppServices.swift in Sources */,
 				4BAFF6641217802960B0C7C7 /* CloudEnvironment.swift in Sources */,
 				88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */,
+				A903CAE5778B74851A21EBEF /* DayRollover.swift in Sources */,
 				36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */,
 				9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */,
 				804CA53542479FED177EF1A7 /* NoteList.swift in Sources */,

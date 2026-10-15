@@ -27,6 +27,13 @@ struct StickyView: View {
             // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신
             .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
                 today = Calendar.current.startOfDay(for: .now)
+                DayRollover.run(in: context)
+            }
+            // 못 끝낸 일을 Today로: 실행할 때, 자정이 지날 때, 앱으로 돌아올 때
+            .task { DayRollover.run(in: context) }
+            .onReceive(NotificationCenter.default.publisher(for: Self.didBecomeActive)) { _ in
+                today = Calendar.current.startOfDay(for: .now)
+                DayRollover.run(in: context)
             }
             #if os(iOS)
             .sheet(isPresented: $showSettings) {
@@ -39,6 +46,12 @@ struct StickyView: View {
             }
             #endif
     }
+
+    #if os(macOS)
+    private static let didBecomeActive = NSApplication.didBecomeActiveNotification
+    #else
+    private static let didBecomeActive = UIApplication.didBecomeActiveNotification
+    #endif
 
     /// 포스트잇 외곽 모양. 맥에서는 설정한 둥글기, iOS는 화면을 꽉 채우므로 사각.
     private var paperShape: RoundedRectangle {
