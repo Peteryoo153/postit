@@ -51,9 +51,7 @@ struct StickyView: View {
     private var paper: PaperColor { sticky?.paper ?? settings.paper }
 
     var body: some View {
-        content
-            .background(paper.color, in: paperShape)
-            .clipShape(paperShape)
+        paperBackground(content)
             .environment(\.colorScheme, .light)
             .onChange(of: filter) { limit = Theme.pageSize }
             // 자정이 지나면 어제 항목에 날짜 머리글이 붙도록 "오늘"을 갱신하고 못 끝낸 일을 Today로
@@ -103,12 +101,18 @@ struct StickyView: View {
     private static let didBecomeActive = UIApplication.didBecomeActiveNotification
     #endif
 
-    /// 포스트잇 외곽 모양. 맥에서는 설정한 둥글기, iOS는 화면을 꽉 채우므로 사각.
-    private var paperShape: RoundedRectangle {
+    /// 종이 배경. 맥은 설정한 둥글기로 자른 모양,
+    /// iOS는 시계·홈 막대 영역까지 화면 끝까지 칠해서 종이 한 장이 화면 전체인 것처럼.
+    @ViewBuilder
+    private func paperBackground<V: View>(_ view: V) -> some View {
         #if os(macOS)
-        RoundedRectangle(cornerRadius: settings.cornerRadius, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: settings.cornerRadius, style: .continuous)
+        view
+            .background(paper.color, in: shape)
+            .clipShape(shape)
         #else
-        RoundedRectangle(cornerRadius: 0)
+        view
+            .background { paper.color.ignoresSafeArea() }
         #endif
     }
 

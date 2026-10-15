@@ -53,6 +53,8 @@ struct PostitApp: App {
                 currentSticky = $0.uuidString
             }
                 .id(currentSticky)
+                // 종이 위의 시계·배터리 글씨가 잘 보이도록 밝은 모드로 (상태 막대 글씨가 어둡게)
+                .preferredColorScheme(.light)
                 .environment(services.settings)
                 .environment(services.cloud)
                 .modelContainer(services.modelContainer)

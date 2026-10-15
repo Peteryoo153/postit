@@ -18,6 +18,15 @@ targets:
   Postit_iOS:
     type: application
     platform: iOS
+    info:
+      path: Resources/Info-iOS.plist
+      properties:
+        # 실행 화면을 포스트잇 노랑으로 (앱이 켜질 때 빈 화면이 번쩍이지 않게)
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        # iCloud 변경 알림을 백그라운드에서 받아 다른 기기의 변경을 미리 반영
+        UIBackgroundModes:
+          - remote-notification
     sources:
       - path: Sources
         excludes:
@@ -29,9 +38,7 @@ targets:
         PRODUCT_NAME: Postit
         TARGETED_DEVICE_FAMILY: "1,2"
         CODE_SIGN_ENTITLEMENTS: Resources/Postit-iOS.entitlements
-        INFOPLIST_KEY_UIBackgroundModes: remote-notification
         INFOPLIST_KEY_CFBundleDisplayName: Postit
-        INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         GENERATE_INFOPLIST_FILE: YES
