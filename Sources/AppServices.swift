@@ -58,6 +58,12 @@ final class AppServices {
         let args = ProcessInfo.processInfo.arguments
         if args.contains("-seedSamples") { SampleData.insert(into: context) }
         if args.contains("-removeSamples") { SampleData.removeAll(from: context) }
+        if args.contains("-resetLayout") {      // 새로 설치한 맥처럼 창 위치 기억을 지운다 (시험용)
+            for key in UserDefaults.standard.dictionaryRepresentation().keys
+            where key.hasPrefix("NSWindow Frame PostitSticky") {
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+        }
         if args.contains("-removeExtraStickies") {
             for sticky in StickyStore.all(in: context) where sticky.id != StickyStore.defaultID {
                 StickyStore.delete(sticky.id, in: context)

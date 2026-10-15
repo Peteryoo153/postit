@@ -4,6 +4,8 @@ import SwiftData
 extension Notification.Name {
     /// 맥: 이 포스트잇을 새 창으로 연다 (object = UUID)
     static let postitOpenSticky = Notification.Name("postitOpenSticky")
+    /// 맥: 새 포스트잇을 만들어 연다 (열린 창이 최대치면 안내만)
+    static let postitNewSticky = Notification.Name("postitNewSticky")
     /// 맥: 이 포스트잇 창을 닫는다 (object = UUID)
     static let postitCloseSticky = Notification.Name("postitCloseSticky")
     /// 이 포스트잇의 입력칸에 커서를 둔다 (object = UUID) — 전역 단축키용
@@ -296,11 +298,10 @@ struct StickyView: View {
     }
 
     private func openNewSticky() {
-        let new = StickyStore.create(in: context, paper: settings.paper)
         #if os(macOS)
-        NotificationCenter.default.post(name: .postitOpenSticky, object: new.id)
+        NotificationCenter.default.post(name: .postitNewSticky, object: nil)
         #else
-        onSelect?(new.id)
+        onSelect?(StickyStore.create(in: context, paper: settings.paper).id)
         #endif
     }
 

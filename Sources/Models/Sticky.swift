@@ -1,14 +1,17 @@
 import Foundation
 import SwiftData
 
-/// 포스트잇 한 장. 이름·종이 색은 iCloud로 동기화된다.
-/// 어떤 포스트잇을 열어 둘지, 창 위치·크기·접힘은 기기마다 따로 기억한다(OpenStickies).
+/// 포스트잇 한 장. 이름·종이 색·열림 여부는 iCloud로 동기화된다.
+/// 그래서 한 맥에서 열어 둔 포스트잇은 다른 맥에서도 열린다.
+/// 창 위치·크기·접힘은 화면마다 달라서 기기마다 따로 기억한다(OpenStickies).
 @Model
 final class Sticky {
     var id: UUID = UUID()
     var title: String = ""
     var paperRaw: String = PaperColor.yellow.rawValue
     var createdAt: Date = Date.now
+    /// 맥에서 창으로 열려 있는지 (모든 맥이 같은 포스트잇을 연다)
+    var isOpen: Bool = true
 
     init(id: UUID = UUID(), title: String = "", paper: PaperColor = .yellow) {
         self.id = id
@@ -48,6 +51,19 @@ enum StickyStore {
         ))) ?? []
         for item in orphans { item.stickyID = id }
         try? context.save()
+    }
+
+    /// 열어 둔 포스트잇 (오래된 순, 최대 maxOpen장)
+    static func openIDs(in context: ModelContext) -> [UUID] {
+        Array(all(in: context).filter(\.isOpen).prefix(maxOpen).map(\.id))
+    }
+
+    static func setOpen(_ id: UUID, _ open: Bool, in context: ModelContext) {
+        withoutUndo(context) {
+            guard let sticky = all(in: context).first(where: { $0.id == id }), sticky.isOpen != open else { return }
+            sticky.isOpen = open
+            try? context.save()
+        }
     }
 
     static func all(in context: ModelContext) -> [Sticky] {

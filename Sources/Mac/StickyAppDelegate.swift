@@ -2,44 +2,65 @@ import SwiftUI
 import AppKit
 import ServiceManagement
 import SwiftData
+import CoreData
 
-/// 맥: 포스트잇 창 여러 장(최대 6장)을 만들고, 열어 둔 포스트잇을 다음 실행 때 그대로 다시 연다.
+/// 맥: 포스트잇 창 여러 장(최대 6장).
+/// 어떤 포스트잇이 열려 있는지는 iCloud로 동기화되므로, 다른 맥에서 열거나 닫으면 여기서도 똑같이 열고 닫는다.
 @MainActor
 final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var windows: [UUID: StickyWindow] = [:]
     private var isTerminating = false
+    /// 동기화 때문에 닫는 창 (사용자가 닫은 게 아니므로 "닫힘"을 다시 기록하지 않는다)
+    private var closingForSync: Set<UUID> = []
+    private var syncScheduled = false
     private let hotKey = GlobalHotKey()
+
+    private var context: ModelContext { AppServices.shared.context }
 
     // MARK: 실행 · 종료
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        let existing = Set(StickyStore.all(in: AppServices.shared.context).map(\.id))
-        var ids = OpenStickies.ids.filter { existing.contains($0) }
-        if ids.isEmpty { ids = [StickyStore.defaultID] }
-        for id in ids.prefix(StickyStore.maxOpen) { open(id) }
+        #if DEBUG
+        AppServices.shared.handleDebugLaunchArguments()   // 창을 만들기 전에 (시험용 초기화)
+        #endif
+        migrateLocalOpenList()
+        if StickyStore.openIDs(in: context).isEmpty {
+            StickyStore.setOpen(StickyStore.defaultID, true, in: context)
+        }
+        syncWindows()
+        windows.values.first?.makeKeyAndOrderFront(nil)
+        NSApp.activate()
+        // 실행하자마자 iCloud에서 최신 내용을 받아온다 (다른 기기에서 연 포스트잇도 함께)
+        AppServices.shared.cloud.syncNow(context)
 
         let center = NotificationCenter.default
         center.addObserver(forName: .postitOpenSticky, object: nil, queue: .main) { [weak self] note in
             guard let id = note.object as? UUID else { return }
             MainActor.assumeIsolated { self?.open(id) }
         }
+        center.addObserver(forName: .postitNewSticky, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.newSticky() }
+        }
         center.addObserver(forName: .postitCloseSticky, object: nil, queue: .main) { [weak self] note in
             guard let id = note.object as? UUID else { return }
             MainActor.assumeIsolated { self?.windows[id]?.close() }
+        }
+        // 이 맥에서 저장했을 때, iCloud에서 받아왔을 때, 앱으로 돌아왔을 때 창을 맞춘다
+        for name in [ModelContext.didSave, NSPersistentCloudKitContainer.eventChangedNotification,
+                     NSApplication.didBecomeActiveNotification] {
+            center.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.scheduleSyncWindows() }
+            }
         }
 
         // 어떤 앱을 쓰고 있든 ⌃⌥P로 포스트잇을 띄우고 입력칸에 커서를 둔다
         hotKey.register { [weak self] in self?.toggleFromHotKey() }
 
         LoginItem.applyDefaultOnFirstLaunch()
-
-        #if DEBUG
-        AppServices.shared.handleDebugLaunchArguments()
-        #endif
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        isTerminating = true      // 종료하면서 닫히는 창은 "열어 둔 목록"에서 빼지 않는다
+        isTerminating = true      // 종료하면서 닫히는 창은 "닫힘"으로 기록하지 않는다
         return .terminateNow
     }
 
@@ -47,6 +68,43 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         showStickies()
         return true
+    }
+
+    /// 예전 버전(이 맥에만 기억)에서 열어 두었던 목록을 한 번만 iCloud 열림 상태로 옮긴다.
+    private func migrateLocalOpenList() {
+        let key = "openStateMigrated"
+        guard !UserDefaults.standard.bool(forKey: key) else { return }
+        UserDefaults.standard.set(true, forKey: key)
+        let local = Set(OpenStickies.ids)
+        guard !local.isEmpty else { return }
+        for sticky in StickyStore.all(in: context) {
+            StickyStore.setOpen(sticky.id, local.contains(sticky.id), in: context)
+        }
+    }
+
+    // MARK: 동기화된 열림 상태에 창 맞추기
+
+    private func scheduleSyncWindows() {
+        guard !syncScheduled else { return }
+        syncScheduled = true
+        DispatchQueue.main.async { [weak self] in
+            self?.syncScheduled = false
+            self?.syncWindows()
+        }
+    }
+
+    private func syncWindows() {
+        guard !isTerminating else { return }
+        let wanted = StickyStore.openIDs(in: context)
+        for (id, window) in windows where !wanted.contains(id) {
+            closingForSync.insert(id)
+            window.close()
+        }
+        for id in wanted where windows[id] == nil {
+            let window = makeWindow(for: id)
+            windows[id] = window
+            window.orderFront(nil)        // 다른 맥에서 연 포스트잇: 지금 작업을 방해하지 않게 앞에만 둔다
+        }
     }
 
     // MARK: 창 열기 · 닫기
@@ -63,29 +121,29 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     }
 
     func open(_ id: UUID) {
-        if let window = windows[id] {
-            window.makeKeyAndOrderFront(nil)
-            NSApp.activate()
-            return
+        if windows[id] == nil {
+            guard ensureRoom() else { return }
+            StickyStore.setOpen(id, true, in: context)
+            syncWindows()
         }
-        guard windows.count < StickyStore.maxOpen else {
-            let alert = NSAlert()
-            alert.messageText = "포스트잇은 한 번에 \(StickyStore.maxOpen)장까지 열 수 있어요"
-            alert.informativeText = "다른 포스트잇을 닫고(⌘W) 다시 열어 주세요."
-            alert.runModal()
-            return
-        }
-        let window = makeWindow(for: id)
-        windows[id] = window
-        saveOpenList()
-        window.makeKeyAndOrderFront(nil)
+        windows[id]?.makeKeyAndOrderFront(nil)
         NSApp.activate()
     }
 
     func newSticky() {
-        let services = AppServices.shared
-        let sticky = StickyStore.create(in: services.context, paper: services.settings.paper)
+        guard ensureRoom() else { return }
+        let sticky = StickyStore.create(in: context, paper: AppServices.shared.settings.paper)
         open(sticky.id)
+    }
+
+    /// 열린 창이 최대치면 안내하고 false
+    private func ensureRoom() -> Bool {
+        guard windows.count >= StickyStore.maxOpen else { return true }
+        let alert = NSAlert()
+        alert.messageText = "포스트잇은 한 번에 \(StickyStore.maxOpen)장까지 열 수 있어요"
+        alert.informativeText = "다른 포스트잇을 닫고(⌘W) 다시 열어 주세요."
+        alert.runModal()
+        return false
     }
 
     func toggleCollapseOfKeyWindow() {
@@ -107,12 +165,12 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 
     func windowWillClose(_ notification: Notification) {
         guard !isTerminating, let window = notification.object as? StickyWindow else { return }
-        windows[window.stickyID] = nil
-        saveOpenList()
-    }
-
-    private func saveOpenList() {
-        OpenStickies.ids = Array(windows.keys)
+        let id = window.stickyID
+        windows[id] = nil
+        if closingForSync.remove(id) == nil {
+            // 사용자가 닫음 → 다른 맥에서도 닫히도록 기록
+            StickyStore.setOpen(id, false, in: context)
+        }
     }
 
     private func makeWindow(for id: UUID) -> StickyWindow {
@@ -141,18 +199,33 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         hosting.sizingOptions = []          // 창 크기는 사용자가 정한다
         window.contentView = hosting
 
-        // 위치·크기는 포스트잇마다 기억. 처음 여는 포스트잇은 앞 창에서 조금 비켜서 연다.
+        // 위치·크기는 이 맥에서 포스트잇마다 기억한다 (재부팅해도 그 자리).
+        // 이 맥에서 처음 여는 포스트잇(새로 설치한 맥 포함)은 기본 배열 자리에 둔다.
         let autosave = "PostitSticky.\(id.uuidString)"
         let legacy = id == StickyStore.defaultID ? "PostitSticky" : nil
-        if !window.setFrameUsingName(autosave) && !(legacy.map { window.setFrameUsingName($0) } ?? false) {
-            if let front = NSApp.keyWindow as? StickyWindow ?? windows.values.first {
-                window.setFrameTopLeftPoint(NSPoint(x: front.frame.minX + 28, y: front.frame.maxY - 28))
-            } else {
-                window.center()
-            }
+        let restored = window.setFrameUsingName(autosave) || (legacy.map { window.setFrameUsingName($0) } ?? false)
+        if !restored || !isOnScreen(window.frame) {
+            window.setFrame(defaultFrame(slot: windows.count), display: false)
         }
         window.setFrameAutosaveName(autosave)
         return window
+    }
+
+    /// 기본 배열: 화면 오른쪽 위부터 3장씩 두 줄로 나란히
+    private func defaultFrame(slot: Int) -> NSRect {
+        let screen = (NSScreen.main ?? NSScreen.screens[0]).visibleFrame
+        let margin: CGFloat = 24, gap: CGFloat = 16, columns = 3
+        let width: CGFloat = 340
+        let height = min(460, (screen.height - margin * 2 - gap) / 2)
+        let column = slot % columns, row = (slot / columns) % 2
+        let x = screen.maxX - margin - CGFloat(column + 1) * width - CGFloat(column) * gap
+        let top = screen.maxY - margin - CGFloat(row) * (height + gap)
+        return NSRect(x: max(screen.minX, x), y: top - height, width: width, height: height)
+    }
+
+    /// 저장된 자리가 지금 연결된 화면 밖이면(모니터를 뺀 경우 등) 기본 배열로
+    private func isOnScreen(_ frame: NSRect) -> Bool {
+        NSScreen.screens.contains { $0.visibleFrame.intersects(frame) }
     }
 }
 
