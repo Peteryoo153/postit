@@ -14,6 +14,7 @@ enum Theme {
     #else
     static let topPadding: CGFloat = 40
     #endif
+    static let bottomPadding: CGFloat = 32
     static let pageSize = 30
 
     enum Label {

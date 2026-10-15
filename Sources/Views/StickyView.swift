@@ -36,7 +36,7 @@ struct StickyView: View {
 
             footer
                 .padding(.horizontal, Theme.padding)
-                .padding(.bottom, 20)
+                .padding(.bottom, Theme.bottomPadding)
                 .padding(.top, 8)
         }
         .background(settings.paper.color)
@@ -91,9 +91,8 @@ struct StickyView: View {
 
     private var footer: some View {
         HStack(spacing: 12) {
-            Text(settings.authorName.isEmpty ? " " : settings.authorName)
-                .font(.system(size: 13))
-                .foregroundStyle(Theme.author)
+            // 날짜 머리글과 같은 글꼴·크기
+            DayHeader(title: settings.authorName.isEmpty ? " " : settings.authorName)
                 .lineLimit(1)
 
             Spacer()
