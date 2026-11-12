@@ -70,7 +70,8 @@ struct WindowChrome: NSViewRepresentable {
             window.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude,
                                     height: CGFloat.greatestFiniteMagnitude)
             let saved = defaults.double(forKey: OpenStickies.expandedHeightKey(stickyID))
-            guard frame.height <= Self.collapsedHeight + 1 || saved > 0 else { return }
+            // 이미 펼쳐진 크기면 그대로 둔다 (실행할 때 기억해 둔 창 크기를 덮어쓰지 않게)
+            guard frame.height <= Self.collapsedHeight + 1 else { return }
             frame.size.height = max(saved > 0 ? saved : 560, Self.expandedMinSize.height)
         }
         frame.origin.y = top - frame.height
