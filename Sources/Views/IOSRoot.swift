@@ -83,6 +83,16 @@ struct BoardView: View {
             }
         }
         .background(desk.ignoresSafeArea())
+        #if DEBUG
+        .onAppear {
+            // 스크린샷용: -demoSearch 검색어 로 보드 검색을 미리 연다
+            let args = ProcessInfo.processInfo.arguments
+            if let i = args.firstIndex(of: "-demoSearch"), i + 1 < args.count {
+                searching = true
+                query = args[i + 1]
+            }
+        }
+        #endif
         .sheet(isPresented: $showSettings) {
             NavigationStack {
                 SettingsView().toolbar { Button("완료") { showSettings = false } }

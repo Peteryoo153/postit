@@ -105,5 +105,114 @@ enum SampleData {
         try? context.delete(model: NoteItem.self, where: #Predicate { $0.isSample })
         try? context.save()
     }
+
+    // MARK: 앱스토어 스크린샷용 데모 (-seedMarketing)
+    // 시뮬레이터와 시험용 Postit Dev에서만: 이 기기의 할 일·포스트잇을 모두 지우고 데모 내용으로 채운다.
+
+    /// (텍스트, 라벨, 고정, 완료, 마감: (며칠 뒤, 시, 분)?)
+    private typealias Row = (String, NoteLabel, Bool, Bool, (Int, Int, Int)?)
+
+    static func insertMarketing(into context: ModelContext) {
+        #if targetEnvironment(simulator) || POSTIT_DEV
+        try? context.delete(model: NoteItem.self)
+        for sticky in StickyStore.all(in: context) where sticky.id != StickyStore.defaultID {
+            context.delete(sticky)
+        }
+        try? context.save()
+
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: .now)
+        let base = Date.now.addingTimeInterval(-3600 * 24 * 30)
+        let papers: [(String, PaperColor, [Row])] = [
+            ("교회", .yellow, [
+                ("느헤미야 4장 본문 관찰 정리", .purple, true, false, nil),
+                ("주보 원고 — 광고 3건 확인", .orange, false, false, (0, 15, 0)),
+                ("김 집사님 병원 심방", .red, false, false, (0, 19, 0)),
+                ("금요 기도회 찬양 순서 보내기", .blue, false, false, nil),
+                ("수련회 장소 견적 비교", .none, false, false, (-1, 17, 0)),
+                ("헌금 봉투 주문", .green, false, true, nil),
+            ]),
+            ("학교", .blue, [
+                ("10학년 성경 워크시트 인쇄", .purple, false, false, nil),
+                ("학부모 상담 일정 회신", .none, false, false, (1, 10, 0)),
+                ("H11 수행평가 채점", .red, false, false, (3, 17, 0)),
+                ("채플 순서지 검토", .green, false, false, nil),
+                ("교사 기도회 기도제목 정리", .none, false, true, nil),
+            ]),
+            ("성경공방", .pink, [
+                ("느헤미야 강해 쇼츠 2편 편집", .red, true, false, nil),
+                ("썸네일 문구 3안", .yellow, false, false, nil),
+                ("설명란 타임스탬프", .blue, false, false, (0, 22, 0)),
+                ("댓글 답글 달기", .none, false, true, nil),
+            ]),
+            ("집", .green, [
+                ("아이 피아노 픽업", .orange, false, false, (0, 16, 30)),
+                ("세탁소 찾기", .none, false, false, nil),
+                ("장보기 — 우유, 사과, 계란", .none, false, false, nil),
+                ("보험 서류 제출", .none, false, false, (-3, 18, 0)),
+            ]),
+            ("설교 메모", .violet, [
+                ("“무너진 성벽” 예화 — 지역 기사 스크랩", .purple, false, false, nil),
+                ("바른 시리즈 7편 제목 후보", .none, false, false, nil),
+                ("도보여행 특별설교 본문: 시편 121편", .green, false, false, nil),
+            ]),
+            ("이번 주", .orange, [
+                ("교목실편지 12호 초안", .blue, false, false, (5, 12, 0)),
+                ("수련회 공지 올리기", .none, false, false, nil),
+                ("차량 점검 예약", .none, false, true, nil),
+            ]),
+        ]
+
+        for (index, (title, paper, rows)) in papers.enumerated() {
+            let sticky: Sticky
+            if index == 0, let first = StickyStore.all(in: context).first(where: { $0.id == StickyStore.defaultID }) {
+                sticky = first
+                sticky.title = title
+                sticky.paper = paper
+                sticky.isOpen = true
+                sticky.createdAt = base.addingTimeInterval(-60)
+            } else {
+                sticky = Sticky(title: title, paper: paper)
+                sticky.createdAt = base.addingTimeInterval(Double(index) * 60)
+                context.insert(sticky)
+            }
+            // 아래 줄부터 넣어야 위에서부터 순서대로 보인다 (최신이 위)
+            for (offset, row) in rows.enumerated().reversed() {
+                let (text, label, pinned, done, due) = row
+                let item = NoteItem(text: text, label: label, stickyID: sticky.id)
+                let created = cal.date(bySettingHour: 8, minute: 0, second: 0, of: today)!
+                    .addingTimeInterval(Double(rows.count - offset) * 600)
+                item.createdAt = created
+                item.isPinned = pinned
+                if let (days, h, m) = due,
+                   let day = cal.date(byAdding: .day, value: days, to: today) {
+                    item.dueDate = cal.date(bySettingHour: h, minute: m, second: 0, of: day)
+                    item.remindMinutes = 10
+                }
+                if done {
+                    item.isDone = true
+                    item.completedAt = created.addingTimeInterval(1800)
+                }
+                item.settlePosition()
+                context.insert(item)
+            }
+            // 어제 끝낸 일 두어 개 (날짜 머리글이 보이도록)
+            if index < 2 {
+                let yesterday = cal.date(byAdding: .day, value: -1, to: today)!
+                for (t, l) in index == 0 ? [("주보 인쇄소 연락", NoteLabel.orange), ("새가족 환영 문자", .green)]
+                                         : [("M8 출석부 제출", NoteLabel.none)] {
+                    let item = NoteItem(text: t, label: l, stickyID: sticky.id)
+                    item.createdAt = yesterday.addingTimeInterval(3600 * 10)
+                    item.day = yesterday
+                    item.isDone = true
+                    item.completedAt = yesterday.addingTimeInterval(3600 * 15)
+                    item.settlePosition()
+                    context.insert(item)
+                }
+            }
+        }
+        try? context.save()
+        #endif
+    }
 }
 #endif

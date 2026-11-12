@@ -71,6 +71,10 @@ final class CloudStatus {
     }
 
     init() {
+        if DemoClock.isDemo {          // 스크린샷용: 동기화 완료로 보이게
+            state = .upToDate
+            return
+        }
         guard CloudEnvironment.isCloudKitEntitled else {
             state = .localOnly
             return

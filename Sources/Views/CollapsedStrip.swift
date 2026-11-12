@@ -19,7 +19,7 @@ struct CollapsedStrip: View {
 
     private var palette: Palette { Palette(paperColor: paper, isDark: colorScheme == .dark) }
     private var hasOverdue: Bool {
-        let now = Date.now
+        let now = DemoClock.now
         return openItems.contains { ($0.dueDate ?? .distantFuture) < now }
     }
 

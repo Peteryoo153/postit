@@ -80,6 +80,7 @@ final class AppServices {
         let args = ProcessInfo.processInfo.arguments
         if args.contains("-seedSamples") { SampleData.insert(into: context) }
         if args.contains("-seedStickies") { SampleData.insertStickies(into: context) }
+        if args.contains("-seedMarketing") { SampleData.insertMarketing(into: context) }
         if args.contains("-removeSamples") { SampleData.removeAll(from: context) }
         if args.contains("-resetLayout") {      // 새로 설치한 맥처럼 창 위치 기억을 지운다 (시험용)
             for key in UserDefaults.standard.dictionaryRepresentation().keys

@@ -336,9 +336,11 @@ struct DueEditor: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .firstTextBaseline) {
+                #if os(macOS)
                 Text("마감일").font(.headline)
                 Spacer()
-                Text(item.text).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                #endif
+                Text(item.text).font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
             }
 
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 8), GridItem(.flexible(), spacing: 8)], spacing: 8) {
@@ -366,10 +368,13 @@ struct DueEditor: View {
                 .datePickerStyle(.compact)
             DatePicker("시간", selection: $date, displayedComponents: .hourAndMinute)
                 .datePickerStyle(.compact)
-            Picker("알림", selection: $remind) {
-                ForEach(RemindOption.allCases) { Text($0.title).tag($0) }
+            LabeledContent("알림") {
+                Picker("알림", selection: $remind) {
+                    ForEach(RemindOption.allCases) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.menu)
+                .labelsHidden()
             }
-            .pickerStyle(.menu)
 
             Divider()
             HStack {
@@ -389,6 +394,8 @@ struct DueEditor: View {
             }
         }
         .padding(16)
+        // 앱 글자가 모두 한국어이므로 날짜·시간도 한국어로 ("2026. 10. 17.", "오후 3:00")
+        .environment(\.locale, Locale(identifier: "ko_KR"))
         #if os(macOS)
         .frame(width: 320)
         #else

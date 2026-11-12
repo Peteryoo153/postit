@@ -2,6 +2,25 @@ import Foundation
 import SwiftData
 import UserNotifications
 
+/// 지금 시각. 스크린샷용 데모 모드(-demoTime 14:14)에서는 오늘 그 시각으로 고정한다.
+enum DemoClock {
+    static let fixedTime: (Int, Int)? = {
+        #if DEBUG || POSTIT_DEV
+        let args = ProcessInfo.processInfo.arguments
+        if let i = args.firstIndex(of: "-demoTime"), i + 1 < args.count {
+            let parts = args[i + 1].split(separator: ":").compactMap { Int($0) }
+            if parts.count == 2 { return (parts[0], parts[1]) }
+        }
+        #endif
+        return nil
+    }()
+    static var isDemo: Bool { fixedTime != nil }
+    static var now: Date {
+        guard let (h, m) = fixedTime else { return .now }
+        return Calendar.current.date(bySettingHour: h, minute: m, second: 0, of: .now) ?? .now
+    }
+}
+
 /// 마감 표시: 오늘 = 시각, 내일 = "내일 …", 이번 주 = 요일, 그 뒤 = 날짜. 지났으면 "· 지남".
 enum DueState { case today, future, overdue }
 
@@ -9,7 +28,7 @@ struct DueInfo {
     let text: String
     let state: DueState
 
-    init(_ due: Date, now: Date = .now) {
+    init(_ due: Date, now: Date = DemoClock.now) {
         let cal = Calendar.current
         let time = Self.time(due)
         if due < now {
@@ -66,7 +85,7 @@ enum DueQuickPick: CaseIterable, Identifiable {
         }
     }
 
-    func date(from now: Date = .now) -> Date {
+    func date(from now: Date = DemoClock.now) -> Date {
         let cal = Calendar.current
         let today = cal.startOfDay(for: now)
         func at(_ day: Date, _ hour: Int) -> Date {
@@ -87,7 +106,7 @@ enum DueQuickPick: CaseIterable, Identifiable {
     }
 
     /// 버튼 오른쪽 작은 글자: "18:00" 또는 "10.18"
-    func detail(from now: Date = .now) -> String {
+    func detail(from now: Date = DemoClock.now) -> String {
         let d = date(from: now)
         switch self {
         case .tonight, .tomorrowMorning:
