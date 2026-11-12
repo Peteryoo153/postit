@@ -10,7 +10,7 @@ settings:
   base:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "1.1"
-    CURRENT_PROJECT_VERSION: "2"
+    CURRENT_PROJECT_VERSION: "3"
     DEVELOPMENT_TEAM: 7VAL2U8BVL
     CODE_SIGN_STYLE: Automatic
 
@@ -27,6 +27,8 @@ targets:
         # iCloud 변경 알림을 백그라운드에서 받아 다른 기기의 변경을 미리 반영
         UIBackgroundModes:
           - remote-notification
+        # 표준 암호화(HTTPS)만 쓰므로 수출 규정 질문이 필요 없다
+        ITSAppUsesNonExemptEncryption: false
     sources:
       - path: Sources
         excludes:
