@@ -7,9 +7,7 @@ struct PostitApp: App {
     #if os(macOS)
     @NSApplicationDelegateAdaptor(StickyAppDelegate.self) private var appDelegate
     @AppStorage("alwaysOnTop") private var alwaysOnTop = true
-    #else
-    /// iOS: 지금 보고 있는 포스트잇 (기기마다 따로)
-    @AppStorage("currentSticky") private var currentSticky = StickyStore.defaultID.uuidString
+    @AppStorage("menuBarIcon") private var menuBarIcon = true
     #endif
 
     var body: some Scene {
@@ -19,11 +17,16 @@ struct PostitApp: App {
         Settings {
             SettingsView()
                 .environment(services.settings)
+                .environment(services.cloud)
         }
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("새 포스트잇") { appDelegate.newSticky() }
                     .keyboardShortcut("n", modifiers: .command)
+            }
+            CommandGroup(replacing: .textEditing) {
+                Button("검색") { appDelegate.searchInKeyWindow() }
+                    .keyboardShortcut("f", modifiers: .command)
             }
             CommandGroup(after: .windowArrangement) {
                 Toggle("항상 위에 띄우기", isOn: $alwaysOnTop)
@@ -36,7 +39,7 @@ struct PostitApp: App {
                 Button("포스트잇 보이기 (\(GlobalHotKey.displayName))") { appDelegate.showStickies() }
                     .keyboardShortcut("0", modifiers: .command)
             }
-            #if DEBUG
+            #if DEBUG || POSTIT_DEV
             CommandMenu("개발") {
                 Button("더미 데이터 넣기 (일주일)") {
                     SampleData.insert(into: services.context)
@@ -47,14 +50,21 @@ struct PostitApp: App {
             }
             #endif
         }
+
+        // 메뉴 막대 아이콘 · 빠른 입력
+        MenuBarExtra(isInserted: $menuBarIcon) {
+            QuickAddView()
+                .environment(services.settings)
+                .environment(services.cloud)
+                .modelContainer(services.modelContainer)
+        } label: {
+            MenuBarLabel(counter: services.counter)
+        }
+        .menuBarExtraStyle(.window)
         #else
         WindowGroup {
-            StickyView(stickyID: UUID(uuidString: currentSticky) ?? StickyStore.defaultID) {
-                currentSticky = $0.uuidString
-            }
-                .id(currentSticky)
-                // 종이 위의 시계·배터리 글씨가 잘 보이도록 밝은 모드로 (상태 막대 글씨가 어둡게)
-                .preferredColorScheme(.light)
+            IOSRoot()
+                .preferredColorScheme(services.settings.appearance.colorScheme)
                 .environment(services.settings)
                 .environment(services.cloud)
                 .modelContainer(services.modelContainer)

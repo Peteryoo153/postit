@@ -15,6 +15,10 @@ final class StickySettings {
     var authorName: String = "" { didSet { save(Key.authorName, authorName) } }
     /// 포스트잇 모서리 둥글기. 0 = 완전 사각.
     var cornerRadius: Double = 20 { didSet { save(Key.cornerRadius, cornerRadius) } }
+    /// 화면 모드 (시스템 · 라이트 · 다크)
+    var appearance: AppearanceMode = .system { didSet { save(Key.appearance, appearance.rawValue) } }
+    /// 종이 질감과 그림자
+    var paperTexture: Bool = true { didSet { save(Key.paperTexture, paperTexture) } }
 
     var textFont: Font { font.font(size: fontSize, weight: weight.weight) }
 
@@ -23,6 +27,7 @@ final class StickySettings {
         static let lineSpacing = "lineSpacing", rowSpacing = "rowSpacing"
         static let paper = "paper", authorName = "authorName"
         static let cornerRadius = "cornerRadius"
+        static let appearance = "appearance", paperTexture = "paperTexture"
     }
 
     private let cloud = NSUbiquitousKeyValueStore.default
@@ -56,6 +61,8 @@ final class StickySettings {
         if let v = value(Key.paper) as? String, let p = PaperColor(rawValue: v) { paper = p }
         if let v = value(Key.authorName) as? String { authorName = v }
         if let v = value(Key.cornerRadius) as? Double { cornerRadius = v }
+        if let v = value(Key.appearance) as? String, let a = AppearanceMode(rawValue: v) { appearance = a }
+        if let v = value(Key.paperTexture) as? Bool { paperTexture = v }
     }
 
     private func save(_ key: String, _ value: Any) {

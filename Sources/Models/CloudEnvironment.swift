@@ -9,6 +9,10 @@ enum CloudEnvironment {
     static let containerID = "iCloud.com.peter.postit"
 
     static let isCloudKitEntitled: Bool = {
+        #if targetEnvironment(simulator)
+        // 시뮬레이터는 시험용: 실제 iCloud 데이터에 섞이지 않도록 항상 이 기기에만 저장한다
+        return false
+        #endif
         #if os(macOS)
         guard let task = SecTaskCreateFromSelf(nil),
               let value = SecTaskCopyValueForEntitlement(

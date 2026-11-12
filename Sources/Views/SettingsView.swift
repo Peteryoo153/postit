@@ -6,7 +6,9 @@ struct SettingsView: View {
     #if os(macOS)
     @AppStorage("alwaysOnTop") private var alwaysOnTop = true
     @State private var launchAtLogin = LoginItem.isEnabled
+    @AppStorage("menuBarIcon") private var menuBarIcon = true
     #endif
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         @Bindable var s = settings
@@ -19,14 +21,14 @@ struct SettingsView: View {
                             s.paper = paper
                         } label: {
                             RoundedRectangle(cornerRadius: 3)
-                                .fill(paper.color)
+                                .fill(paper.color(dark: colorScheme == .dark))
                                 .frame(width: 30, height: 30)
                                 .shadow(color: .black.opacity(0.15), radius: 2, y: 1)
                                 .overlay {
                                     if s.paper == paper {
                                         Image(systemName: "checkmark")
                                             .font(.system(size: 13, weight: .bold))
-                                            .foregroundStyle(Theme.ink)
+                                            .foregroundStyle(Palette(paperColor: paper, isDark: colorScheme == .dark).ink)
                                     }
                                 }
                         }
@@ -50,14 +52,28 @@ struct SettingsView: View {
             }
 
             Section("미리보기") {
-                Text("http://api.url/1.0/post\n//main method for post")
-                    .font(s.textFont)
-                    .lineSpacing(s.lineSpacing)
-                    .foregroundStyle(Theme.ink)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(16)
-                    .background(s.paper.color, in: RoundedRectangle(cornerRadius: s.cornerRadius * 0.5))
-                    .environment(\.colorScheme, .light)
+                let palette = Palette(paperColor: s.paper, isDark: colorScheme == .dark)
+                VStack(alignment: .leading, spacing: s.rowSpacing) {
+                    Text("Today").font(.system(size: s.fontSize * 1.07, weight: .bold))
+                    Text("주보 원고 — 광고 3건 확인").font(s.textFont)
+                    Text("금요 기도회 찬양 순서 보내기").font(s.textFont)
+                }
+                .lineSpacing(s.lineSpacing)
+                .foregroundStyle(palette.ink)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(16)
+                .background {
+                    PaperSurface(texture: s.paperTexture).environment(\.palette, palette)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: s.cornerRadius * 0.5, style: .continuous))
+            }
+
+            Section("화면") {
+                Picker("모드", selection: $s.appearance) {
+                    ForEach(AppearanceMode.allCases) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                Toggle("종이 질감과 그림자", isOn: $s.paperTexture)
             }
 
             #if os(macOS)
@@ -78,12 +94,14 @@ struct SettingsView: View {
             #if os(macOS)
             Section("창") {
                 Toggle("항상 다른 창 위에 띄우기", isOn: $alwaysOnTop)
+                Toggle("메뉴 막대에 빠른 입력 아이콘", isOn: $menuBarIcon)
                 Toggle("로그인 시 자동 실행", isOn: Binding(
                     get: { launchAtLogin },
                     set: { LoginItem.set($0); launchAtLogin = LoginItem.isEnabled }
                 ))
                 LabeledContent("어디서나 포스트잇 열기", value: GlobalHotKey.displayName)
                 LabeledContent("새 포스트잇", value: "⌘N (최대 \(StickyStore.maxOpen)장)")
+                LabeledContent("검색", value: "⌘F")
             }
             #endif
         }

@@ -23,6 +23,12 @@ final class NoteItem {
     var isSample: Bool = false
     /// 속한 포스트잇 (Sticky.id). 예전 항목은 nil → 실행 시 기본 포스트잇으로 옮긴다.
     var stickyID: UUID?
+    /// 맨 위 고정 구역에 둔다 (완료하면 그 날짜 아래로 내려간다)
+    var isPinned: Bool = false
+    /// 마감 시각 (없으면 nil)
+    var dueDate: Date?
+    /// 마감 몇 분 전에 알릴지. -1 = 알림 없음
+    var remindMinutes: Int = -1
 
     init(text: String, label: NoteLabel = .none, stickyID: UUID = StickyStore.defaultID) {
         let now = Date.now
@@ -38,6 +44,8 @@ final class NoteItem {
         get { NoteLabel(rawValue: labelRaw) ?? .none }
         set { labelRaw = newValue.rawValue }
     }
+
+    var hasReminder: Bool { dueDate != nil && remindMinutes >= 0 }
 
     /// 체크 표시만 먼저 바꾼다 (밑줄/흐림이 즉시 보이도록).
     func setDone(_ done: Bool) {

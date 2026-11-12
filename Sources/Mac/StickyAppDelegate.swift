@@ -20,7 +20,7 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     // MARK: 실행 · 종료
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        #if DEBUG
+        #if DEBUG || POSTIT_DEV
         AppServices.shared.handleDebugLaunchArguments()   // 창을 만들기 전에 (시험용 초기화)
         #endif
         migrateLocalOpenList()
@@ -53,10 +53,13 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
             }
         }
 
+        #if !POSTIT_DEV
         // 어떤 앱을 쓰고 있든 ⌃⌥P로 포스트잇을 띄우고 입력칸에 커서를 둔다
+        // (시험용 Postit Dev는 실제 앱과 겹치지 않게 단축키·로그인 실행을 쓰지 않는다)
         hotKey.register { [weak self] in self?.toggleFromHotKey() }
 
         LoginItem.applyDefaultOnFirstLaunch()
+        #endif
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
@@ -144,6 +147,14 @@ final class StickyAppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         alert.informativeText = "다른 포스트잇을 닫고(⌘W) 다시 열어 주세요."
         alert.runModal()
         return false
+    }
+
+    /// ⌘F: 지금 쓰는 포스트잇에서 검색
+    func searchInKeyWindow() {
+        let id = (NSApp.keyWindow as? StickyWindow)?.stickyID ?? windows.keys.first
+        guard let id else { return }
+        windows[id]?.makeKeyAndOrderFront(nil)
+        NotificationCenter.default.post(name: .postitSearch, object: id)
     }
 
     func toggleCollapseOfKeyWindow() {
@@ -285,7 +296,8 @@ struct MacStickyRoot: View {
                 stickyID: stickyID,
                 collapsed: collapsed,
                 cornerRadius: settings.cornerRadius,
-                alwaysOnTop: alwaysOnTop
+                alwaysOnTop: alwaysOnTop,
+                appearance: settings.appearance
             ))
             // 다른 기기에서 이 포스트잇을 지우면 이 창도 닫는다
             .onChange(of: stickies.isEmpty) { _, gone in

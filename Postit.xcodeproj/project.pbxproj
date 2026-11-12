@@ -7,38 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02C369E90C891EB089B2DD97 /* CollapsedStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BF8AB80B6962DCAB92A0ED /* CollapsedStrip.swift */; };
 		04E2178DDE0B4F84C06D6C9E /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
+		081731BCB72BB725D46A6A34 /* Due.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A717703B6483F7CC824D5CD /* Due.swift */; };
 		0AFACDF3E5F35D2875E77F7B /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
 		13DAC386CE98B40C00F9474C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
+		177F6523B35E11D40CE82DC0 /* IOSRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C638BA1FD3C9B0F72D6852 /* IOSRoot.swift */; };
 		1A9184F0FD4A15E5B5160325 /* PostitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE291E13C33C9DBDEF46D63C /* PostitApp.swift */; };
+		1B7D0526620EDDC967509AB0 /* StickyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC483AC67E51A3ED3D6382 /* StickyAppDelegate.swift */; };
+		1CE5B74D0C2F138E68D5012B /* CollapsedStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721EE7C3DEA08DAE5D47663 /* CollapsedStrip.swift */; };
+		1EAA2D7FD0AAEC07729A7A83 /* CollapsedStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721EE7C3DEA08DAE5D47663 /* CollapsedStrip.swift */; };
+		20C7C6B272B583B759707A26 /* Sticky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D97CC49C3FB50BA4746A42 /* Sticky.swift */; };
+		25BB7160C91A9D69DBBC29A2 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D3DF5AD0A1BA1610E090EA /* GlobalHotKey.swift */; };
+		295006031E0E600627F470C4 /* IOSRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C638BA1FD3C9B0F72D6852 /* IOSRoot.swift */; };
+		2F49902C2D0C290E03A32F08 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
+		32C30C44374A115850E9554F /* StickyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */; };
+		358EB670511ABE7A043C1B77 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
 		36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
 		395BC4BA06ABA0EF117A3167 /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
+		39C28E38759A8BD34AEEFD7A /* PostitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE291E13C33C9DBDEF46D63C /* PostitApp.swift */; };
+		4284371B16AC57462115C090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE867DD0E0E5BEE856FA517E /* Assets.xcassets */; };
 		4416162FA75F05FAEADA2C9E /* PostitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE291E13C33C9DBDEF46D63C /* PostitApp.swift */; };
 		4BAFF6641217802960B0C7C7 /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
 		4D213D98DEF86C325094305D /* StickyAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DC483AC67E51A3ED3D6382 /* StickyAppDelegate.swift */; };
+		5780D5CA7C0350972F7ADF64 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
 		5CE1A1D2A796C118AF940449 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF01B835E8538C6F7DF0A /* AppServices.swift */; };
+		64ABB5CAD863E2D4FDF466AF /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		656256134418924060A11625 /* Sticky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D97CC49C3FB50BA4746A42 /* Sticky.swift */; };
 		67E60D4047ADFFD029A76FA7 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
 		6825439CCE431D4786C27678 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D3DF5AD0A1BA1610E090EA /* GlobalHotKey.swift */; };
+		6E69B63751E32A9C11758BBB /* QuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA9855F0BC81C1BD8377E2 /* QuickAddView.swift */; };
+		6EFDAF6F49E6C81BFD9C314C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */; };
+		6F376A436749E55D84875429 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF01B835E8538C6F7DF0A /* AppServices.swift */; };
 		73B55A8A92CC2333F59CD337 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE867DD0E0E5BEE856FA517E /* Assets.xcassets */; };
 		73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
 		7897F2EF7E92A26505EFBE98 /* StickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60DD2C0BCBFC972014E39 /* StickyView.swift */; };
+		791A6659F624290909B09C01 /* Due.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A717703B6483F7CC824D5CD /* Due.swift */; };
 		7938EB332074CCE1A4899751 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
+		7BC4CE958C749859953DD48C /* CollapsedStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721EE7C3DEA08DAE5D47663 /* CollapsedStrip.swift */; };
 		804CA53542479FED177EF1A7 /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
+		81FF75EC14125C27BB39C134 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */; };
 		8635A174AB2B577F854EBFF6 /* WindowChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = E205DA6B68F14CF47377821E /* WindowChrome.swift */; };
 		8826547561978D00E69BFA79 /* StickySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A9C28FA797FF332C4D5C6D /* StickySettings.swift */; };
 		88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
 		893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
 		9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
+		A51BE5DA8A1153F7501B8978 /* QuickAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA9855F0BC81C1BD8377E2 /* QuickAddView.swift */; };
 		A783E775502193BF14866B65 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
 		A903CAE5778B74851A21EBEF /* DayRollover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A940842A6442889B338F5BE4 /* DayRollover.swift */; };
+		AB16C0FADA0F2228BE1EE14A /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
 		AFAEDBCE49E84DC989243C02 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85354AF690D50E0DA3BB11D7 /* SampleData.swift */; };
 		B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */; };
+		B413984F58EF169FE6D36508 /* Due.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A717703B6483F7CC824D5CD /* Due.swift */; };
+		B49C2F633A364EDA98102DB9 /* NoteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914C5C8E026C5C7DB980947E /* NoteRow.swift */; };
+		B4A3FD1ABF3FC3FD728373E3 /* CloudEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */; };
 		B901FE9CAA40EA38D0AF87C6 /* DayRollover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A940842A6442889B338F5BE4 /* DayRollover.swift */; };
+		BC1599816461FC7EA1CBAD69 /* NoteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */; };
 		C505FB3B45C2F9775E79652E /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF01B835E8538C6F7DF0A /* AppServices.swift */; };
 		C6A31E896FCF117FFC806CE6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
+		C78D40C2D81C75679B0493AF /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
+		CB56F1800FE4E83D6BA153D8 /* IOSRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C638BA1FD3C9B0F72D6852 /* IOSRoot.swift */; };
+		D4BB9682259A543F96EF8CBE /* DayRollover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A940842A6442889B338F5BE4 /* DayRollover.swift */; };
+		E5F653C6CCE2941C89BD3759 /* WindowChrome.swift in Sources */ = {isa = PBXBuildFile; fileRef = E205DA6B68F14CF47377821E /* WindowChrome.swift */; };
 		F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */; };
 		F4AD8D4F758B81143133409E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08A5BAA36501A9459801DA1 /* Theme.swift */; };
 		F751E1166C3802A6374B1FAF /* StickyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */; };
@@ -49,21 +79,25 @@
 /* Begin PBXFileReference section */
 		0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
 		07C0C39493092AC579F90AEC /* Postit_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Postit_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A717703B6483F7CC824D5CD /* Due.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Due.swift; sourceTree = "<group>"; };
 		4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43A9C28FA797FF332C4D5C6D /* StickySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickySettings.swift; sourceTree = "<group>"; };
 		47D3DF5AD0A1BA1610E090EA /* GlobalHotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKey.swift; sourceTree = "<group>"; };
+		4CAA9855F0BC81C1BD8377E2 /* QuickAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddView.swift; sourceTree = "<group>"; };
 		4F2FF01B835E8538C6F7DF0A /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
+		7721EE7C3DEA08DAE5D47663 /* CollapsedStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsedStrip.swift; sourceTree = "<group>"; };
 		83F60DD2C0BCBFC972014E39 /* StickyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyView.swift; sourceTree = "<group>"; };
 		85354AF690D50E0DA3BB11D7 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		89D97CC49C3FB50BA4746A42 /* Sticky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sticky.swift; sourceTree = "<group>"; };
 		908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyWindow.swift; sourceTree = "<group>"; };
 		914C5C8E026C5C7DB980947E /* NoteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRow.swift; sourceTree = "<group>"; };
+		9765079FC30B54835FC3BE9C /* Postit_macOS_Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Postit_macOS_Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A940842A6442889B338F5BE4 /* DayRollover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayRollover.swift; sourceTree = "<group>"; };
 		A9DC483AC67E51A3ED3D6382 /* StickyAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyAppDelegate.swift; sourceTree = "<group>"; };
 		AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteLabel.swift; sourceTree = "<group>"; };
 		AE291E13C33C9DBDEF46D63C /* PostitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostitApp.swift; sourceTree = "<group>"; };
 		B2E12B8922C2642B89506003 /* Postit_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Postit_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B7BF8AB80B6962DCAB92A0ED /* CollapsedStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsedStrip.swift; sourceTree = "<group>"; };
+		B7C638BA1FD3C9B0F72D6852 /* IOSRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSRoot.swift; sourceTree = "<group>"; };
 		C08A5BAA36501A9459801DA1 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		CE867DD0E0E5BEE856FA517E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStatus.swift; sourceTree = "<group>"; };
@@ -76,6 +110,8 @@
 		12160FE9400C85123922584A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7721EE7C3DEA08DAE5D47663 /* CollapsedStrip.swift */,
+				B7C638BA1FD3C9B0F72D6852 /* IOSRoot.swift */,
 				DFFCAB9FF9F5EB467E439AD4 /* NoteList.swift */,
 				914C5C8E026C5C7DB980947E /* NoteRow.swift */,
 				4218A4A2AFF80A0FCCE4B410 /* SettingsView.swift */,
@@ -97,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				07C0C39493092AC579F90AEC /* Postit_iOS.app */,
+				9765079FC30B54835FC3BE9C /* Postit_macOS_Dev.app */,
 				B2E12B8922C2642B89506003 /* Postit_macOS.app */,
 			);
 			name = Products;
@@ -105,8 +142,8 @@
 		6308D95F96F9B5A02E62D69F /* Mac */ = {
 			isa = PBXGroup;
 			children = (
-				B7BF8AB80B6962DCAB92A0ED /* CollapsedStrip.swift */,
 				47D3DF5AD0A1BA1610E090EA /* GlobalHotKey.swift */,
+				4CAA9855F0BC81C1BD8377E2 /* QuickAddView.swift */,
 				A9DC483AC67E51A3ED3D6382 /* StickyAppDelegate.swift */,
 				908EED8B8DE2B2BC5E96F0E5 /* StickyWindow.swift */,
 				E205DA6B68F14CF47377821E /* WindowChrome.swift */,
@@ -133,6 +170,7 @@
 				F1B042DDAF0692C9CC86C5A1 /* CloudEnvironment.swift */,
 				D62F2B628B8AAA5D9EA5FA16 /* CloudStatus.swift */,
 				A940842A6442889B338F5BE4 /* DayRollover.swift */,
+				3A717703B6483F7CC824D5CD /* Due.swift */,
 				0690D5B5CD6A494E34D5D1D7 /* NoteItem.swift */,
 				AB3A1737F359BE78BE6B8599 /* NoteLabel.swift */,
 				85354AF690D50E0DA3BB11D7 /* SampleData.swift */,
@@ -171,6 +209,24 @@
 			productReference = 07C0C39493092AC579F90AEC /* Postit_iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		747AEFD7FDC3D1B8651EEE57 /* Postit_macOS_Dev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59A49BAE234B7008B1BD1AE4 /* Build configuration list for PBXNativeTarget "Postit_macOS_Dev" */;
+			buildPhases = (
+				962C84A09DAC8F94FC7F93A9 /* Sources */,
+				20411C7F0A57E7488C35259F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Postit_macOS_Dev;
+			packageProductDependencies = (
+			);
+			productName = Postit_macOS_Dev;
+			productReference = 9765079FC30B54835FC3BE9C /* Postit_macOS_Dev.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B21C68AF44F5DD392D3D6C77 /* Postit_macOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A7BFE79A34DC4CCCA0840495 /* Build configuration list for PBXNativeTarget "Postit_macOS" */;
@@ -202,6 +258,10 @@
 						DevelopmentTeam = 7VAL2U8BVL;
 						ProvisioningStyle = Automatic;
 					};
+					747AEFD7FDC3D1B8651EEE57 = {
+						DevelopmentTeam = 7VAL2U8BVL;
+						ProvisioningStyle = Automatic;
+					};
 					B21C68AF44F5DD392D3D6C77 = {
 						DevelopmentTeam = 7VAL2U8BVL;
 						ProvisioningStyle = Automatic;
@@ -224,11 +284,20 @@
 			targets = (
 				6A82848A8623B78D40BBE12D /* Postit_iOS */,
 				B21C68AF44F5DD392D3D6C77 /* Postit_macOS */,
+				747AEFD7FDC3D1B8651EEE57 /* Postit_macOS_Dev */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		20411C7F0A57E7488C35259F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4284371B16AC57462115C090 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		847A56C20492B6A5323A915C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -248,6 +317,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		962C84A09DAC8F94FC7F93A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F376A436749E55D84875429 /* AppServices.swift in Sources */,
+				B4A3FD1ABF3FC3FD728373E3 /* CloudEnvironment.swift in Sources */,
+				AB16C0FADA0F2228BE1EE14A /* CloudStatus.swift in Sources */,
+				7BC4CE958C749859953DD48C /* CollapsedStrip.swift in Sources */,
+				D4BB9682259A543F96EF8CBE /* DayRollover.swift in Sources */,
+				081731BCB72BB725D46A6A34 /* Due.swift in Sources */,
+				25BB7160C91A9D69DBBC29A2 /* GlobalHotKey.swift in Sources */,
+				CB56F1800FE4E83D6BA153D8 /* IOSRoot.swift in Sources */,
+				81FF75EC14125C27BB39C134 /* NoteItem.swift in Sources */,
+				BC1599816461FC7EA1CBAD69 /* NoteLabel.swift in Sources */,
+				2F49902C2D0C290E03A32F08 /* NoteList.swift in Sources */,
+				B49C2F633A364EDA98102DB9 /* NoteRow.swift in Sources */,
+				39C28E38759A8BD34AEEFD7A /* PostitApp.swift in Sources */,
+				A51BE5DA8A1153F7501B8978 /* QuickAddView.swift in Sources */,
+				64ABB5CAD863E2D4FDF466AF /* SampleData.swift in Sources */,
+				6EFDAF6F49E6C81BFD9C314C /* SettingsView.swift in Sources */,
+				20C7C6B272B583B759707A26 /* Sticky.swift in Sources */,
+				1B7D0526620EDDC967509AB0 /* StickyAppDelegate.swift in Sources */,
+				5780D5CA7C0350972F7ADF64 /* StickySettings.swift in Sources */,
+				358EB670511ABE7A043C1B77 /* StickyView.swift in Sources */,
+				32C30C44374A115850E9554F /* StickyWindow.swift in Sources */,
+				C78D40C2D81C75679B0493AF /* Theme.swift in Sources */,
+				E5F653C6CCE2941C89BD3759 /* WindowChrome.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ACA12324B9D61B0F638AC085 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -255,14 +354,17 @@
 				5CE1A1D2A796C118AF940449 /* AppServices.swift in Sources */,
 				893955A20020D93AADB5A03D /* CloudEnvironment.swift in Sources */,
 				B0BE6330F13202D5C975C6A1 /* CloudStatus.swift in Sources */,
-				02C369E90C891EB089B2DD97 /* CollapsedStrip.swift in Sources */,
+				1CE5B74D0C2F138E68D5012B /* CollapsedStrip.swift in Sources */,
 				B901FE9CAA40EA38D0AF87C6 /* DayRollover.swift in Sources */,
+				B413984F58EF169FE6D36508 /* Due.swift in Sources */,
 				6825439CCE431D4786C27678 /* GlobalHotKey.swift in Sources */,
+				295006031E0E600627F470C4 /* IOSRoot.swift in Sources */,
 				73B70617705A5F39C3552C75 /* NoteItem.swift in Sources */,
 				A783E775502193BF14866B65 /* NoteLabel.swift in Sources */,
 				F128BB0CC0921489BB59EF7B /* NoteList.swift in Sources */,
 				395BC4BA06ABA0EF117A3167 /* NoteRow.swift in Sources */,
 				4416162FA75F05FAEADA2C9E /* PostitApp.swift in Sources */,
+				6E69B63751E32A9C11758BBB /* QuickAddView.swift in Sources */,
 				AFAEDBCE49E84DC989243C02 /* SampleData.swift in Sources */,
 				0590D3172C87E13A5D8C95F4 /* SettingsView.swift in Sources */,
 				656256134418924060A11625 /* Sticky.swift in Sources */,
@@ -282,7 +384,10 @@
 				C505FB3B45C2F9775E79652E /* AppServices.swift in Sources */,
 				4BAFF6641217802960B0C7C7 /* CloudEnvironment.swift in Sources */,
 				88C27FB5E5DF5FF0E7775187 /* CloudStatus.swift in Sources */,
+				1EAA2D7FD0AAEC07729A7A83 /* CollapsedStrip.swift in Sources */,
 				A903CAE5778B74851A21EBEF /* DayRollover.swift in Sources */,
+				791A6659F624290909B09C01 /* Due.swift in Sources */,
+				177F6523B35E11D40CE82DC0 /* IOSRoot.swift in Sources */,
 				36549F9AEB9D4878341A2576 /* NoteItem.swift in Sources */,
 				9EC8970C0418306D9F66DF77 /* NoteLabel.swift in Sources */,
 				804CA53542479FED177EF1A7 /* NoteList.swift in Sources */,
@@ -335,7 +440,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7VAL2U8BVL;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -350,7 +455,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -379,6 +484,27 @@
 				SDKROOT = macosx;
 			};
 			name = Release;
+		};
+		5A1447590850C11571FCFCE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Postit-macOS-Dev.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Postit Dev";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.peter.postit.dev;
+				PRODUCT_NAME = "Postit Dev";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) POSTIT_DEV";
+			};
+			name = Debug;
 		};
 		7A1F3DB60F6EE602C560D5AB /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -479,7 +605,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 7VAL2U8BVL;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -500,7 +626,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -511,9 +637,39 @@
 			};
 			name = Debug;
 		};
+		C66086E784A848D15A17EAB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Postit-macOS-Dev.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Postit Dev";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.peter.postit.dev;
+				PRODUCT_NAME = "Postit Dev";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) POSTIT_DEV";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		59A49BAE234B7008B1BD1AE4 /* Build configuration list for PBXNativeTarget "Postit_macOS_Dev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5A1447590850C11571FCFCE1 /* Debug */,
+				C66086E784A848D15A17EAB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		9AFDD27536C5CAEA3A6539EA /* Build configuration list for PBXNativeTarget "Postit_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

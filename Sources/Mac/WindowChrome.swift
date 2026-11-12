@@ -3,13 +3,14 @@ import AppKit
 
 /// 창 수준 설정을 실제 창에 반영한다: 접기/펼치기 높이, 항상 위, 모서리에 맞춘 그림자.
 struct WindowChrome: NSViewRepresentable {
-    static let collapsedHeight: CGFloat = 40
+    static let collapsedHeight: CGFloat = 30
     private static let expandedMinSize = NSSize(width: 260, height: 300)
 
     var stickyID: UUID
     var collapsed: Bool
     var cornerRadius: Double
     var alwaysOnTop: Bool
+    var appearance: AppearanceMode = .system
 
     final class Coordinator {
         var appliedCollapsed: Bool?
@@ -31,6 +32,12 @@ struct WindowChrome: NSViewRepresentable {
     private func configure(_ window: NSWindow?, _ coordinator: Coordinator) {
         guard let window else { return }
         window.level = alwaysOnTop ? .floating : .normal
+        let wanted: NSAppearance? = switch appearance {
+        case .system: nil
+        case .light: NSAppearance(named: .aqua)
+        case .dark: NSAppearance(named: .darkAqua)
+        }
+        if window.appearance?.name != wanted?.name { window.appearance = wanted }
 
         if coordinator.appliedRadius != cornerRadius {
             coordinator.appliedRadius = cornerRadius

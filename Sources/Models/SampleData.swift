@@ -1,4 +1,4 @@
-#if DEBUG
+#if DEBUG || POSTIT_DEV
 import Foundation
 import SwiftData
 
@@ -65,6 +65,38 @@ enum SampleData {
             }
             item.settlePosition()
             context.insert(item)
+            // 고정 · 마감 예시
+            if daysAgo == 0 && text.hasPrefix("이번주 설교") { item.isPinned = true }
+            if daysAgo == 0 && text.hasPrefix("주보") {
+                item.dueDate = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: today)
+            }
+            if daysAgo == 0 && text.hasPrefix("대전") {
+                item.dueDate = calendar.date(byAdding: .hour, value: -20, to: .now)
+            }
+            if daysAgo == 1 && text.hasPrefix("교사 기도회") {
+                item.dueDate = calendar.date(byAdding: .day, value: 2, to: today)?.addingTimeInterval(17 * 3600)
+            }
+        }
+        try? context.save()
+    }
+
+    /// 보드 확인용 포스트잇 몇 장 (교회 · 학교 · 집 · 성경공방)
+    static func insertStickies(into context: ModelContext) {
+        guard StickyStore.all(in: context).count < 2 else { return }
+        StickyStore.all(in: context).first?.title = "교회"
+        let extra: [(String, PaperColor, [String])] = [
+            ("학교", .blue, ["10학년 성경 워크시트 인쇄", "학부모 상담 일정 회신", "H11 수행평가 채점"]),
+            ("집", .green, ["아이 피아노 픽업", "세탁소 찾기", "장보기 — 우유, 사과, 계란"]),
+            ("성경공방", .pink, ["느헤미야 강해 쇼츠 2편 편집", "썸네일 문구 3안"]),
+        ]
+        for (title, paper, texts) in extra {
+            let s = Sticky(title: title, paper: paper)
+            context.insert(s)
+            for t in texts.reversed() {
+                let item = NoteItem(text: t, stickyID: s.id)
+                item.isSample = true
+                context.insert(item)
+            }
         }
         try? context.save()
     }
