@@ -26,6 +26,8 @@ struct PagerView: View {
     let stickies: [Sticky]
     @Binding var current: String
     @Environment(\.colorScheme) private var colorScheme
+    /// 키보드가 화면 아래(홈 막대 영역 위)를 가리는 높이
+    @State private var keyboardLift: CGFloat = 0
 
     private var selection: Binding<UUID> {
         Binding(
@@ -43,6 +45,7 @@ struct PagerView: View {
             TabView(selection: selection) {
                 ForEach(Array(stickies.enumerated()), id: \.element.id) { index, sticky in
                     StickyView(stickyID: sticky.id, layout: .page, safeInsets: geo.safeAreaInsets,
+                               keyboardLift: keyboardLift,
                                pageIndex: index, pageCount: stickies.count) { current = $0.uuidString }
                         .tag(sticky.id)
                 }
@@ -50,7 +53,21 @@ struct PagerView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             // 장 사이 틈 = 어두운 책상
             .background(colorScheme == .dark ? Theme.hex(0x121211) : Theme.hex(0x2A2926))
-            .ignoresSafeArea(.container)
+            // 키보드 영역도 무시한다. 키보드에 맞춰 페이지가 줄어들면 입력 줄이 시계·다이내믹 아일랜드 밑으로 밀려 올라간다.
+            // 대신 아래 줄(이름 · ···)은 keyboardLift만큼 직접 올린다.
+            .ignoresSafeArea()
+            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { note in
+                guard let end = note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+                let window = UIApplication.shared.connectedScenes
+                    .compactMap { ($0 as? UIWindowScene)?.keyWindow }.first
+                let height = window?.bounds.height ?? end.maxY
+                let home = window?.safeAreaInsets.bottom ?? 0
+                let lift = max(0, height - end.minY - home)
+                withAnimation(.easeOut(duration: 0.25)) { keyboardLift = lift }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+                withAnimation(.easeOut(duration: 0.25)) { keyboardLift = 0 }
+            }
         }
     }
 }

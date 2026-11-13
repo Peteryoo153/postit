@@ -32,6 +32,8 @@ struct StickyView: View {
     var externalQuery: String? = nil
     /// 아이폰: 화면 끝까지 칠한 종이 안에서 글자가 피해야 할 시계·홈 막대 자리
     var safeInsets = EdgeInsets()
+    /// 아이폰 한 장 보기: 키보드가 가리는 높이. 페이지가 키보드를 무시하므로 아래 줄만 이만큼 올린다.
+    var keyboardLift: CGFloat = 0
     /// iOS: 아래 이름 줄 가운데 점 (몇 번째 장인지)
     var pageIndex: Int? = nil
     var pageCount: Int = 0
@@ -65,12 +67,13 @@ struct StickyView: View {
     #endif
 
     init(stickyID: UUID, layout: StickyLayout = .window, externalQuery: String? = nil,
-         safeInsets: EdgeInsets = EdgeInsets(), pageIndex: Int? = nil, pageCount: Int = 0,
+         safeInsets: EdgeInsets = EdgeInsets(), keyboardLift: CGFloat = 0, pageIndex: Int? = nil, pageCount: Int = 0,
          onSelect: ((UUID) -> Void)? = nil, onZoom: (() -> Void)? = nil) {
         self.stickyID = stickyID
         self.layout = layout
         self.externalQuery = externalQuery
         self.safeInsets = safeInsets
+        self.keyboardLift = keyboardLift
         self.pageIndex = pageIndex
         self.pageCount = pageCount
         self.onSelect = onSelect
@@ -165,6 +168,7 @@ struct StickyView: View {
                 .clipShape(shape)
         case .page:
             view
+                .padding(.bottom, keyboardLift)
                 .background { surface.ignoresSafeArea() }
         }
     }
