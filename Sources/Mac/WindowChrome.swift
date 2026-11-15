@@ -48,18 +48,19 @@ struct WindowChrome: NSViewRepresentable {
         guard coordinator.appliedCollapsed != collapsed else { return }
         let isFirstApply = coordinator.appliedCollapsed == nil
         coordinator.appliedCollapsed = collapsed
-        resize(window, animate: !isFirstApply)
+        resize(window, animate: !isFirstApply, isFirstApply: isFirstApply)
         DispatchQueue.main.async { window.invalidateShadow() }
     }
 
     /// 윗변을 고정한 채로 높이만 바꾼다 (스티커가 위로 말려 올라가듯).
-    private func resize(_ window: NSWindow, animate: Bool) {
+    private func resize(_ window: NSWindow, animate: Bool, isFirstApply: Bool) {
         var frame = window.frame
         let top = frame.maxY
         let defaults = UserDefaults.standard
 
         if collapsed {
-            if frame.height > Self.collapsedHeight + 1 {
+            // 펼쳤을 때 돌아갈 높이를 기억한다 (제대로 펼쳐진 크기일 때만)
+            if frame.height >= Self.expandedMinSize.height {
                 defaults.set(frame.height, forKey: OpenStickies.expandedHeightKey(stickyID))
             }
             window.minSize = NSSize(width: Self.expandedMinSize.width, height: Self.collapsedHeight)
@@ -70,9 +71,11 @@ struct WindowChrome: NSViewRepresentable {
             window.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude,
                                     height: CGFloat.greatestFiniteMagnitude)
             let saved = defaults.double(forKey: OpenStickies.expandedHeightKey(stickyID))
-            // 이미 펼쳐진 크기면 그대로 둔다 (실행할 때 기억해 둔 창 크기를 덮어쓰지 않게)
-            guard frame.height <= Self.collapsedHeight + 1 else { return }
-            frame.size.height = max(saved > 0 ? saved : 560, Self.expandedMinSize.height)
+            // 실행할 때(처음 적용)는 기억해 둔 창 크기를 그대로 둔다. 너무 작을 때만 고친다.
+            // 접힌 띠를 펼칠 때는 언제나 접기 전 높이로 되돌린다.
+            // (예전 버전에서 띠 높이가 40이어서 높이로 판단하면 펼쳐지지 않는 일이 있었다)
+            if isFirstApply && frame.height >= Self.expandedMinSize.height { return }
+            frame.size.height = saved >= Self.expandedMinSize.height ? saved : 560
         }
         frame.origin.y = top - frame.height
         window.setFrame(frame, display: true, animate: animate)

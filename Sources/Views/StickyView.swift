@@ -330,6 +330,16 @@ struct StickyView: View {
 
                 Spacer()
 
+                // 마지막 동기화 시각 (날짜 · 시:분)
+                if let synced = cloud.lastSyncedText {
+                    Text(synced)
+                        .font(.system(size: 10, weight: .medium))
+                        .monospacedDigit()
+                        .foregroundStyle(palette.secondary)
+                        .help("마지막 동기화")
+                        .accessibilityLabel("마지막 동기화 \(synced)")
+                }
+
                 // 동기화 상태: 전 · 중(깜빡임) · 완료 — 누르면 지금 동기화
                 Button {
                     cloud.syncNow(context)

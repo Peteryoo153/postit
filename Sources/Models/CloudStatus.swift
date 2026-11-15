@@ -18,6 +18,17 @@ final class CloudStatus {
 
     private(set) var state: State = .pending
     private(set) var lastError: String?
+    /// 마지막으로 iCloud와 주고받기를 마친 시각 (이 기기 기준, 다시 실행해도 기억)
+    private(set) var lastSynced: Date? = UserDefaults.standard.object(forKey: "lastSyncedAt") as? Date {
+        didSet { UserDefaults.standard.set(lastSynced, forKey: "lastSyncedAt") }
+    }
+
+    /// 아래 줄에 작게 보이는 마지막 동기화 시각: "11.15 14:32"
+    var lastSyncedText: String? {
+        guard let lastSynced, state != .signedOut, state != .localOnly else { return nil }
+        let c = Calendar.current.dateComponents([.month, .day, .hour, .minute], from: lastSynced)
+        return String(format: "%d.%d %02d:%02d", c.month ?? 0, c.day ?? 0, c.hour ?? 0, c.minute ?? 0)
+    }
     /// 동시에 진행 중인 동기화 작업(설정·가져오기·내보내기). 모두 끝나야 "완료".
     private var running: Set<UUID> = []
 
@@ -124,6 +135,9 @@ final class CloudStatus {
             return
         }
         running.remove(event.identifier)
+        if event.succeeded, event.type != .setup {
+            lastSynced = event.endDate ?? .now
+        }
         if !event.succeeded {
             state = .error
             lastError = event.error?.localizedDescription
