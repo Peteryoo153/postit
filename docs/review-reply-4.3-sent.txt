@@ -1,0 +1,39 @@
+Thank you for the review. We believe Postit meets guidelines 4.3(a), 4.3(b) and 4.2.6, so we are replying instead of resubmitting.
+
+1. What it does
+Postit puts a paper-like sticky note on the Mac desktop that stays on top of other windows, and keeps the same note on iPhone and iPad via the user's own iCloud. Many people keep daily to-dos in Apple's Stickies or on paper notes on the monitor. Stickies is Mac-only with no iPhone sync, so the list is lost when they leave the desk. On Mac, Postit uses borderless always-on-top windows, a global hotkey (⌃⌥P) that brings notes to the current monitor, and double-click to fold a note into a strip; the same items appear on iPhone/iPad to check off on the go. Unfinished items roll over to Today automatically.
+
+2. Intended users
+People who work at a computer all day and use a sticky note as working memory: teachers and school staff (the developer is a school chaplain and teacher), church staff, office workers and students who want one short list always in sight, without an account or a project-management tool.
+
+3. Gap in the market
+- Apple Stickies: Mac only, no iPhone/iPad app, no sync, no completion or dates.
+- Notes/Reminders: full apps you must open; they cannot stay on top of other windows as a small desktop note.
+- Other sticky-note apps are mostly single-platform or need their own account/server. Postit needs no account, stores data only in the user's private iCloud, and keeps the sticky-note metaphor on all three devices.
+
+4. Beta testing
+The developer has used Postit daily since Oct 15, 2026 on two Macs (two monitors) and an iPhone, with builds via TestFlight (internal). Feedback applied, visible in the public history at https://github.com/Peteryoo153/postit/commits/main :
+- Dragging the paper did not move the window → whole note is draggable.
+- Yesterday's tasks disappeared → unfinished tasks roll over to Today.
+- Notes stayed on the other monitor → ⌃⌥P brings them to the current one.
+- Folded notes looked identical → strip shows name and remaining count.
+- Expanding a folded note did not restore its height → fixed.
+- iPhone keyboard pushed the input line under the status bar → fixed in 1.1 (4).
+- Users wanted to know if sync finished → sync status and last sync time shown.
+
+5. Standalone or suite
+Standalone. Our account also has myloop, mylife and Today's Ministry, which are different products: myloop is a "life OS" splitting the day into Work/Study/Life modes; mylife is a home dashboard of weather, calendar and other modules; Today's Ministry is a checklist and calendar for pastors' ministry work. Postit has no modes, modules, categories or calendar: just an always-visible desktop sticky note mirrored on iPhone/iPad.
+
+6. Could it be part of another app?
+No. Postit's core is Mac desktop behavior: borderless floating windows above other apps, a system-wide hotkey, folding into strips, up to six notes across monitors. None of our other apps has a desktop window model; adding it would turn them into a different kind of app. Postit is intentionally tiny and free for people who don't want a planner.
+
+7. Shared code or assets with our other apps
+No. Written from scratch in a separate repository from Oct 15, 2026 (public: https://github.com/Peteryoo153/postit). Only Apple frameworks (SwiftUI, SwiftData, CloudKit, AppKit, UserNotifications). Icon, paper design, colors and texture were made for Postit.
+
+8. Shared code/SDK with third-party apps
+No. No third-party SDKs or libraries.
+
+9. Made for a client or third party?
+No. Concept, content and design are the developer's own, submitted under the developer's own account. Not built from a commercial template or app generation service. The developer wrote it in Xcode and used an AI coding assistant as a programming tool; all product decisions, design and testing were done by the developer.
+
+Thank you for reconsidering.
